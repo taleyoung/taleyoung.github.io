@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="## 中国大学mooc视频地址 程序设计与算法（二）算法基础  【搬运自taleyoung的印象笔记】 先来看个热身题  其中隐藏的分治的思维：8 - 8 称，会发现无假币或有假币即在对应8枚中4 - 42 - 21 - 1一共需要4次完成 【思考一番 】  由此引出今天的主题分治的典型应用（一）：归并排序 即 将一个数组用Mergesort函数分成两份，然后应用递归再次分成两份然后应用Merge">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MOOC算法学习笔记 - 分治">
+<meta property="og:url" content="http://yoursite.com/2018/02/12/MOOC算法学习笔记 - 分治/index.html">
+<meta property="og:site_name" content="Taleyoung&#39;s Blog">
+<meta property="og:description" content="## 中国大学mooc视频地址 程序设计与算法（二）算法基础  【搬运自taleyoung的印象笔记】 先来看个热身题  其中隐藏的分治的思维：8 - 8 称，会发现无假币或有假币即在对应8枚中4 - 42 - 21 - 1一共需要4次完成 【思考一番 】  由此引出今天的主题分治的典型应用（一）：归并排序 即 将一个数组用Mergesort函数分成两份，然后应用递归再次分成两份然后应用Merge">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-11T18:05:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MOOC算法学习笔记 - 分治">
+<meta name="twitter:description" content="## 中国大学mooc视频地址 程序设计与算法（二）算法基础  【搬运自taleyoung的印象笔记】 先来看个热身题  其中隐藏的分治的思维：8 - 8 称，会发现无假币或有假币即在对应8枚中4 - 42 - 21 - 1一共需要4次完成 【思考一番 】  由此引出今天的主题分治的典型应用（一）：归并排序 即 将一个数组用Mergesort函数分成两份，然后应用递归再次分成两份然后应用Merge">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/12/MOOC算法学习笔记 - 分治/"/>
+
+
+
+
+
+  <title>MOOC算法学习笔记 - 分治 | Taleyoung's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Taleyoung's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/12/MOOC算法学习笔记 - 分治/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="taleyoung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taleyoung's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MOOC算法学习笔记 - 分治</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-12T15:10:27+08:00">
+                2018-02-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>##</p>
+<p><em>中国大学mooc视频地址 <a href="https://www.icourse163.org/learn/PKU-1001894005?tid=1002783037#/learn/announce" target="_blank" rel="noopener">程序设计与算法（二）算法基础
+</a></em></p>
+<p>【搬运自taleyoung的印象笔记】</p>
+<p><strong>先来看个热身题</strong></p>
+<blockquote>
+<p>其中隐藏的分治的思维：<br>8 - 8 称，会发现无假币或有假币即在对应8枚中<br>4 - 4<br>2 - 2<br>1 - 1<br>一共需要4次完成 【思考一番 】</p>
+</blockquote>
+<p>由此引出今天的主题<br><strong>分治的典型应用（一）：归并排序</strong></p>
+<p><strong>即 将一个数组用Mergesort函数分成两份，然后应用递归再次分成两份<br>然后应用Merge将这些组合起来</strong></p>
+<pre><code>#include&lt;iostream&gt;
+using namespace std;
+int a[10] = {13,27,19,2,8,12,2,8,30,89};
+int b[10];
+void Merge(int a[],int s,int m,int e,int b[]){
+    int pb = 0;       //用来标记b数组的下标
+    int p1 = s, p2 = m+1;
+    while(p1&lt;=m &amp;&amp; p2 &lt;=e){   //这一步将两个已排序数组合并成一个数组
+        if(a[p1] &lt; a[p2]){       //很具有技巧性！！
+            b[pb++] = a[p1++];
+        }
+        else b[pb++] = a[p2++];
+    }
+    while(p1 &lt;= m)    //用于担心一半用完一半未用完
+        b[pb++] = a[p1++];
+    while(p2 &lt;= e)
+        b[pb++] = a[p2++];
+    for(int i = 0;i &lt; e-s+1; i++){
+        a[s+i] = b[i];
+    }
+}
+void Mergesort(int a[],int s, int e, int b[]){
+    if(s &lt; e){
+        int m = s + (e-s)/2;        
+        Mergesort(a,s,m,b);        //递归了
+        Mergesort(a,m+1,e,b);
+        Merge(a,s,m,e,b);
+    }
+}
+int main()
+{
+    int size = sizeof(a)/sizeof(a[0]);
+    Mergesort(a,0,size-1,b);
+    for(int i = 0; i &lt; size; i++)
+        cout &lt;&lt; a[i] &lt;&lt; &apos;,&apos;;
+    cout &lt;&lt; endl;
+    return 0;
+}
+</code></pre><p>分治的典型应用（二）：快速排序<br>本令k为a[0]，然后把数组中比k小的放在左面，比k大的放在右边，然后对左右两边再进行递归， 在放左放右的过程的算法十分精妙 需要仔细研究 就不细讲了 自己看代码把。</p>
+<pre><code>#include&lt;iostream&gt;
+using namespace std;
+int a[] = {93,27,30,2,8,30,89};
+void swap(int &amp;m,int &amp;n){        //写交换函数，注意要取地址
+    int t = m;
+    m = n;
+    n = t;
+}
+void Quicksort(int a[], int s, int e){
+    if(s &gt;= e)
+        return;
+    int i = s,j = e;        //这步算法很精妙！i在最前 j在最后
+    int k = a[s];            //k为第一个数 即将作为分界数
+    while(i!=j){                //只要i!=j说明i和j还在走
+        while(i&lt;j &amp;&amp; a[j]&gt;=k)        //    一种情况下一直用while 使得跳出时是a[j]&lt;k的时候   【k=a[i]】     
+            j--;
+        swap(a[i],a[j]);                //由上述while循环筛选出应该swap的对象    【k=a[j]】
+        while(i&lt;j &amp;&amp; a[i]&lt;=k)    // 此时k = a[j]
+            i++;                              //在while的情况下 i一直往前走 找出a[i]&gt;k的时候跳出
+        swap(a[i],a[j]);
+    }                            
+    Quicksort(a,s,i-1);            //对两边进行递归
+    Quicksort(a,i+1,e);
+}
+int main(){
+    int size = sizeof(a)/sizeof(a[0]);
+    Quicksort(a,0,size-1);
+    for(int i = 0; i &lt; size; i++)
+        cout &lt;&lt; a[i] &lt;&lt;&apos;,&apos;;
+    cout &lt;&lt; endl;
+    return 0;
+}
+</code></pre><p>分治练习</p>
+<blockquote>
+<p>例题一：输出前m大的数<br>给定一个数组包含n个元素，统计前m大的数并且把这m大的数从大到小输出<br>【具体输入输出见视频或查阅印象笔记】</p>
+</blockquote>
+<p>思路：<br>1.应用归并排序的思维，令key = a[0] 然后比key大的放其后，比key小的放在前面，此步用arrangeRight函数实现<br>2.比较右侧a个比key大的数：<br>    1)a=k -&gt; 即为所求<br>    2)a&gt;k -&gt; 即需要在a中继续1步，进行递归操作 arangeRight(k)<br>    3)a<k -=""> 需要把左侧拿k-a个到右边 即arangeRight(k-a)<br>    由上述分析可知，在2和3中不断递归 知道出现目标1 即1是递归的边界条件</k></p>
+<p>#include<iostream><br>using namespace std;<br>void QuickSort(int a[], int s, int e){        //快排的标准模板 要熟练这种思想<br>    if(s &gt;= e)        //这个是总的边界条件<br>        return ;<br>    int i = s,j = e;<br>    int k = a[s];<br>    while(i!=j){<br>        while(i &lt; j &amp;&amp; a[j] &gt;=k)<br>            j–;<br>        swap(a[i],a[j]);<br>        while(i &lt; j &amp;&amp; a[i] &lt;= k)<br>            i++;<br>        swap(a[i],a[j]);<br>    }<br>    QuickSort(a, s, i-1);        //对前后两块再进行递归，用上面的边界条件终止<br>    QuickSort(a, i+1,e);<br>}<br>void arrangeRight(int a[],int s,int e, int k){        //利用分治归并的思想写出来的<br>    if(s &gt;= e)            //排除特殊情况<br>        return ;<br>    if( k== e-s+1)       //总边界条件 用于跳出递归循环：含义是当递归到只剩一个比较时终止<br>        return ;<br>    int i = s,j = e;<br>    int key = a[s];        //用key而非k 因为k是目标 下面还要比较进行再递归<br>    while(i!=j){<br>        while( i &lt; j &amp;&amp; a[j] &gt;= key)<br>            j–;<br>        swap(a[i],a[j]);<br>        while( i &lt; j &amp;&amp; a[i] &lt;= key)<br>            i++;<br>        swap(a[i],a[j]);<br>    }<br>    if(k==e-i+1)<br>        return ;<br>    else if( k &lt; e-i+1)            //这几步递归的奥妙 见上述思路的分析可得<br>        arrangeRight(a,i+1,e,k);<br>    else if( k &gt;= e-i+1)<br>        arrangeRight(a,s,i-1,k-(e-i+1));<br>}<br>void printM(int a[],int n, int k){        //要会写这种函数块编程<br>    arrangeRight(a,0,n-1,k);    //参数别搞错了<br>    QuickSort(a,n-k,n-1);        //要排后k项，最后一位下标是n-1 即第一位是n-1-k+1=n-k<br>//    for(int i = 6; i &lt; 10; i++)        //这样是越界的 参照下面的方法<br>//        cout &lt;&lt; a[i] &lt;&lt; ‘,’;<br>    while(k–)                                //这个技巧咋还不会呢！！！！<br>        cout &lt;&lt; a[–n] &lt;&lt;” “;<br>    cout &lt;&lt; endl ;<br>}<br>void swap(int &amp;m, int &amp;n){<br>    int t = m;<br>    m = n;<br>    n = t;<br>}<br>int main()<br>{<br>    int a[] = {1,4,7,2,5,8,3,6,9};<br>//    int m = 4;<br>    printM(a,9,4);<br>    return 0;<br>}</iostream></p>
+<blockquote>
+<p>例题二：求排列的逆序数<br>【具体输入输出见视频或查阅印象笔记】<br>此题思想类似于等值题目那道题一样。</p>
+</blockquote>
+<p>此类方法的特点是充分利用数组有序的特点只遍历数组一次，比较两个数组中相等元素，不需o(n2)的复杂度，这种方法 我语言表达不出来，就像》。。算了 自己看带代码吧</p>
+<pre><code>#include &lt;stdio.h&gt;
+int main()
+{
+    int f[5] = {1,3,4,7,9};
+    int g[5] = {3,5,7,8,10};
+    int i=0, j = 0, count = 0;
+    while(i &lt; 5&amp;&amp; j &lt; 5){
+        if(f[i] == g[j]){
+            count++;
+            i++,j++;
+        }
+        else if(f[i] &gt; g[j]){
+            j++;
+        }
+        else{
+            i++;
+        }
+    }
+    printf(&quot;%d&quot;,count);
+    return 0;
+}
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/12/MOOC算法学习笔记 - 动态规划（1）/" rel="prev" title="MOOC算法学习笔记 - 动态规划（1）">
+                MOOC算法学习笔记 - 动态规划（1） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="taleyoung" />
+            
+              <p class="site-author-name" itemprop="name">taleyoung</p>
+              <p class="site-description motion-element" itemprop="description">已经在这里等你很久了。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/taleyoung" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yourname@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/yourname" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/yourname" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/yourname" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1090117853" target="_blank" title="qq">
+                      
+                        <i class="fa fa-fw fa-qq"></i>qq</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">taleyoung</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="部分代码来自《数学建模算法与应用》《matlab在数学建模中的应用》层次分析法 disp(&amp;apos;请输入判断矩阵A(n阶)&amp;apos;); A=input(&amp;apos;A=&amp;apos;); [n,n]=size(A); x=ones(n,100); y=ones(n,100); m=zeros(1,100); m(1)=max(x(:,1)); y(:,1)=x(:,1); x(:,2)=A*">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数学建模部分算法-总结">
+<meta property="og:url" content="http://yoursite.com/2018/08/12/数学建模部分算法-总结/index.html">
+<meta property="og:site_name" content="Taleyoung&#39;s Blog">
+<meta property="og:description" content="部分代码来自《数学建模算法与应用》《matlab在数学建模中的应用》层次分析法 disp(&amp;apos;请输入判断矩阵A(n阶)&amp;apos;); A=input(&amp;apos;A=&amp;apos;); [n,n]=size(A); x=ones(n,100); y=ones(n,100); m=zeros(1,100); m(1)=max(x(:,1)); y(:,1)=x(:,1); x(:,2)=A*">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-14T02:48:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数学建模部分算法-总结">
+<meta name="twitter:description" content="部分代码来自《数学建模算法与应用》《matlab在数学建模中的应用》层次分析法 disp(&amp;apos;请输入判断矩阵A(n阶)&amp;apos;); A=input(&amp;apos;A=&amp;apos;); [n,n]=size(A); x=ones(n,100); y=ones(n,100); m=zeros(1,100); m(1)=max(x(:,1)); y(:,1)=x(:,1); x(:,2)=A*">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/12/数学建模部分算法-总结/"/>
+
+
+
+
+
+  <title>数学建模部分算法-总结 | Taleyoung's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Taleyoung's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/12/数学建模部分算法-总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="taleyoung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taleyoung's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数学建模部分算法-总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-12T15:10:27+08:00">
+                2018-08-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>部分代码来自《数学建模算法与应用》《matlab在数学建模中的应用》<br><strong>层次分析法</strong></p>
+<pre><code>disp(&apos;请输入判断矩阵A(n阶)&apos;);
+A=input(&apos;A=&apos;);
+[n,n]=size(A);
+x=ones(n,100);
+y=ones(n,100);
+m=zeros(1,100);
+m(1)=max(x(:,1));
+y(:,1)=x(:,1);
+x(:,2)=A*y(:,1);
+m(2)=max(x(:,2));
+y(:,2)=x(:,2)/m(2);
+p=0.0001;i=2;k=abs(m(2)-m(1));
+while  k&gt;p
+  i=i+1;
+  x(:,i)=A*y(:,i-1);
+  m(i)=max(x(:,i));
+  y(:,i)=x(:,i)/m(i);
+  k=abs(m(i)-m(i-1));
+end
+a=sum(y(:,i));
+w=y(:,i)/a;
+t=m(i);
+disp(w);%权向量
+         %以下是一致性检验
+CI=(t-n)/(n-1);RI=[0 0 0.52 0.89 1.12 1.26 1.36 1.41 1.46 1.49 1.52 1.54 1.56 1.58 1.59];
+CR=CI/RI(n);   %一致性比率
+if CR&lt;0.10
+    disp(&apos;此矩阵的一致性可以接受!&apos;);
+    disp(&apos;CI=&apos;);disp(CI);
+    disp(&apos;CR=&apos;);disp(CR);
+end
+</code></pre><p><strong>模拟退火算法</strong><br>代码模型如下：<br>【</p>
+<pre><code>1. 城市坐标需要根据题目整理出来。
+2. 程序参数，初温等。
+</code></pre><p>】<br>swap.m</p>
+<pre><code>function [ newpath , position ] = swap( oldpath , number )
+% 对 oldpath 进 行 互 换 操 作
+% number 为 产 生 的 新 路 径 的 个 数
+% position 为 对 应 newpath 互 换 的 位 置
+m = length( oldpath ) ; % 城 市 的 个 数
+newpath = zeros( number , m ) ;
+position = sort( randi( m , number , 2 ) , 2 ); % 随 机 产 生 交 换 的 位 置
+for i = 1 : number
+newpath( i , : ) = oldpath ;
+% 交 换 路 径 中 选 中 的 城 市
+newpath( i , position( i , 1 ) ) = oldpath( position( i , 2 ) ) ;
+newpath( i , position( i , 2 ) ) = oldpath( position( i , 1 ) ) ;
+end
+</code></pre><p>pathfare.m</p>
+<pre><code>function [ objval ] = pathfare( fare , path )
+% 计 算 路 径 path 的 代 价 objval
+% path 为 1 到 n 的 排 列 ，代 表 城 市 的 访 问 顺 序 ；
+% fare 为 代 价 矩 阵 ， 且 为 方 阵 。
+[ m , n ] = size( path ) ;
+objval = zeros( 1 , m ) ;
+for i = 1 : m
+for j = 2 : n
+objval( i ) = objval( i ) + fare( path( i , j - 1 ) , path( i , j ) ) ;
+end
+objval( i ) = objval( i ) + fare( path( i , n ) , path( i , 1 ) ) ;
+end
+</code></pre><p>distance.m</p>
+<pre><code>function [ fare ] = distance( coord )
+% 根 据 各 城 市 的 距 离 坐 标 求 相 互 之 间 的 距 离
+% fare 为 各 城 市 的 距 离 ， coord 为 各 城 市 的 坐 标
+[ v , m ] = size( coord ) ; % m 为 城 市 的 个 数
+fare = zeros( m ) ;
+for i = 1 : m % 外 层 为 行
+for j = i : m % 内 层 为 列
+fare( i , j ) = ( sum( ( coord( : , i ) - coord( : , j ) ) .^ 2 ) ) ^ 0.5 ;
+fare( j , i ) = fare( i , j ) ; % 距 离 矩 阵 对 称
+end
+end
+</code></pre><p>myplot.m</p>
+<pre><code>function [ ] = myplot( path , coord , pathfar )
+% 做 出 路 径 的 图 形
+% path 为 要 做 图 的 路 径 ，coord 为 各 个 城 市 的 坐 标
+% pathfar 为 路 径 path 对 应 的 费 用
+len = length( path ) ;
+clf ;
+hold on ;
+title( [ &apos;近似最短路径如下，路程为&apos; , num2str( pathfar ) ] ) ;
+plot( coord( 1 , : ) , coord( 2 , : ) , &apos;ok&apos;);
+pause( 0.4 ) ;
+for ii = 2 : len
+plot( coord( 1 , path( [ ii - 1 , ii ] ) ) , coord( 2 , path( [ ii - 1 , ii ] ) ) , &apos;-b&apos;);
+x = sum( coord( 1 , path( [ ii - 1 , ii ] ) ) ) / 2 ;
+y = sum( coord( 2 , path( [ ii - 1 , ii ] ) ) ) / 2 ;
+text( x , y , [ &apos;(&apos; , num2str( ii - 1 ) , &apos;)&apos; ] ) ;
+pause( 0.4 ) ;
+end
+plot( coord( 1 , path( [ 1 , len ] ) ) , coord( 2 , path( [ 1 , len ] ) ) , &apos;-b&apos; ) ;
+x = sum( coord( 1 , path( [ 1 , len ] ) ) ) / 2 ;
+y = sum( coord( 2 , path( [ 1 , len ] ) ) ) / 2 ;
+text( x , y , [ &apos;(&apos; , num2str( len ) , &apos;)&apos; ] ) ;
+pause( 0.4 ) ;
+hold off ;
+</code></pre><p>主程序</p>
+<pre><code>clear;
+% 程 序 参 数 设 定
+Coord = ... % 城 市 的 坐 标 Coordinates
+[ 0.6683 0.6195 0.4    0.2439 0.1707 0.2293 0.5171 0.8732 0.6878 0.8488 ; ...
+  0.2536 0.2634 0.4439 0.1463 0.2293 0.761  0.9414 0.6536 0.5219 0.3609 ] ;
+t0 = 1 ; % 初 温 t0
+iLk = 20 ; % 内 循 环 最 大 迭 代 次 数 iLk
+oLk = 50 ; % 外 循 环 最 大 迭 代 次 数 oLk
+lam = 0.95 ; % λ lambda
+istd = 0.001 ; % 若 内 循 环 函 数 值 方 差 小 于 istd 则 停 止
+ostd = 0.001 ; % 若 外 循 环 函 数 值 方 差 小 于 ostd 则 停 止
+ilen = 5 ; % 内 循 环 保 存 的 目 标 函 数 值 个 数
+olen = 5 ; % 外 循 环 保 存 的 目 标 函 数 值 个 数
+% 程 序 主 体
+m = length( Coord ) ; % 城 市 的 个 数 m
+fare = distance( Coord ) ; % 路 径 费 用 fare
+path = 1 : m ; % 初 始 路 径 path
+pathfar = pathfare( fare , path ) ; % 路 径 费 用 path fare
+ores = zeros( 1 , olen ) ; % 外 循 环 保 存 的 目 标 函 数 值
+e0 = pathfar ; % 能 量 初 值 e0
+t = t0 ; % 温 度 t
+for out = 1 : oLk % 外 循 环 模 拟 退 火 过 程
+ires = zeros( 1 , ilen ) ; % 内 循 环 保 存 的 目 标 函 数 值
+for in = 1 : iLk % 内 循 环 模 拟 热 平 衡 过 程
+[ newpath , v ] = swap( path , 1 ) ; % 产 生 新 状 态
+e1 = pathfare( fare , newpath ) ; % 新 状 态 能 量
+% Metropolis 抽 样 稳 定 准 则
+r = min( 1 , exp( - ( e1 - e0 ) / t ) ) ;
+if rand &lt; r
+path = newpath ; % 更 新 最 佳 状 态
+e0 = e1 ;
+end
+ires = [ ires( 2 : end ) e0 ] ; % 保 存 新 状 态 能 量
+% 内 循 环 终 止 准 则 ：连 续 ilen 个 状 态 能 量 波 动 小 于 istd
+if std( ires , 1 ) &lt; istd
+break ;
+end
+end
+ores = [ ores( 2 : end ) e0 ] ; % 保 存 新 状 态 能 量
+% 外 循 环 终 止 准 则 ：连 续 olen 个 状 态 能 量 波 动 小 于 ostd
+if std( ores , 1 ) &lt; ostd
+break ;
+end
+t = lam * t ;
+end
+pathfar = e0 ;
+% 输 入 结 果
+fprintf( &apos;近似最优路径为：\n &apos; )
+%disp( char( [ path , path(1) ] + 64 ) ) ;
+disp(path)
+fprintf( &apos;近似最优路径路程\tpathfare=&apos; ) ;
+disp( pathfar ) ;
+myplot( path , Coord , pathfar ) ;
+</code></pre><blockquote>
+<p>测试数据： Coord = [ 66.83 61.95 40    24.39 17.07 22.93 51.71 87.32 68.78<br>84.88 50 40 25 ;<br>          25.36 26.34 44.39 14.63 22.93 76.1  94.14 65.36 52.19 36.09 30 20 26] ;</p>
+</blockquote>
+<p>蒙特卡洛算法</p>
+<pre><code>clear,clc
+x=unifrnd(0,12,[1,10000000]);
+%产生1*10000000的0~12随机的连续均匀分布的数组
+y=unifrnd(0,9,[1,10000000]);
+pinshu = sum(y&lt;x.^2&amp;x&lt;=3)+sum(y&lt;12-x&amp;x&gt;=3);
+area_apper=12*9*pinshu/10^7;
+</code></pre><p>图论-floyd算法<br>已测试通过 代码模型如下：</p>
+<p>1.主程序</p>
+<pre><code>tulun2.m
+运用的时候需要修改 ：
+weight赋权图
+修改floyd函数参数   floyd(weight,起始点, 终止点)
+a= [ 0,50,inf,40,25,10;
+     50,0,15,20,inf,25;
+     inf,15,0,10,20,inf;
+     40,20,10,0,10,25;
+     25,inf,20,10,0,55;
+     10,25,inf,25,55,0];
+[D, path]=floyd(a)
+</code></pre><p>2.算法程序</p>
+<pre><code>floyd.m
+function [D,path,min1,path1]=floyd(a,start,terminal)
+D=a;n=size(D,1);path=zeros(n,n);
+for i=1:n
+   for j=1:n
+      if D(i,j)~=inf
+         path(i,j)=j;
+      end,
+   end,
+end
+for k=1:n
+   for i=1:n
+      for j=1:n
+         if D(i,k)+D(k,j)&lt;D(i,j)
+            D(i,j)=D(i,k)+D(k,j);
+            path(i,j)=path(i,k);
+         end,
+      end,
+   end,
+end
+if nargin==3
+   min1=D(start,terminal);
+   m(1)=start;
+   i=1;
+   path1=[ ];   
+   while   path(m(i),terminal)~=terminal
+      k=i+1;                                
+      m(k)=path(m(i),terminal);
+      i=i+1;
+   end
+   m(i+1)=terminal;
+   path1=m;
+end  
+</code></pre><blockquote>
+<p>测试数据（带权邻接矩阵范例）：<br>    [0     8   Inf   Inf   Inf   Inf     7     8   Inf   Inf   Inf;    Inf     0     3   Inf   Inf   Inf   Inf   Inf   Inf   Inf   Inf;<br>Inf   Inf     0     5     6   Inf     5   Inf   Inf   Inf   Inf;<br>Inf   Inf   Inf     0     1   Inf   Inf   Inf   Inf   Inf    12;<br>Inf   Inf     6   Inf     0     2   Inf   Inf   Inf   Inf    10;<br>Inf   Inf   Inf   Inf     2     0     9   Inf     3   Inf   Inf;<br>Inf   Inf   Inf   Inf   Inf     9     0   Inf   Inf   Inf   Inf;<br>     8   Inf   Inf   Inf   Inf   Inf   Inf     0     9   Inf   Inf;    Inf   Inf   Inf   Inf     7   Inf   Inf     9     0     2   Inf;<br>Inf   Inf   Inf   Inf   Inf   Inf   Inf   Inf     2     0     2;<br>Inf   Inf   Inf   Inf    10   Inf   Inf   Inf   Inf   Inf     0;];</p>
+</blockquote>
+<p>图论-Dijkstra算法<br>1.主程序<br>tulun1.m<br>运用的时候需要修改 ：</p>
+<pre><code>1. 
+</code></pre><p>weight赋权图</p>
+<pre><code>2. 
+</code></pre><p>修改dijkstra函数参数   dijkstra(weight,起始点, 终止点)</p>
+<blockquote>
+<p>weight=    [0     2     8     1   Inf   Inf   Inf   Inf   Inf   Inf<br>Inf;<br>                   2     0     6   Inf     1   Inf   Inf   Inf   Inf   Inf   Inf;<br>            8     6     0     7     5     1     2   Inf   Inf   Inf   Inf;<br>            1   Inf     7     0   Inf   Inf     9   Inf   Inf   Inf   Inf;<br>          Inf     1     5   Inf     0     3   Inf     2     9   Inf   Inf;<br>          Inf   Inf     1   Inf     3     0     4   Inf     6   Inf   Inf;<br>          Inf   Inf     2     9   Inf     4     0   Inf     3     1   Inf;<br>          Inf   Inf   Inf   Inf     2   Inf   Inf     0     7   Inf     9;<br>          Inf   Inf   Inf   Inf     9     6     3     7     0     1     2;<br>          Inf   Inf   Inf   Inf   Inf   Inf     1   Inf     1     0     4;<br>          Inf   Inf   Inf   Inf   Inf   Inf   Inf     9     2     4     0;]; [dis, path]=dijkstra(weight,1, 11)</p>
+<p>weight1=[0 33 Inf Inf Inf Inf Inf 21 Inf;<br>         33 0 21 Inf Inf Inf Inf Inf Inf;<br>         Inf 21 0 21 Inf Inf Inf 33 Inf;<br>         Inf Inf 21 0 21 Inf 33 Inf 21;<br>         Inf Inf Inf 21 0 33 Inf Inf Inf;<br>         Inf Inf Inf Inf 33 0 21 Inf Inf;<br>         Inf Inf Inf 33 Inf 21 0 21 15;<br>         21 Inf 33 Inf Inf Inf 21 0 Inf;<br>         Inf Inf Inf 21 Inf Inf 15 Inf 0;];</p>
+</blockquote>
+<p>2.算法程序</p>
+<pre><code>dijkstra.m
+
+function [min,path]=dijkstra(w,start,terminal)
+n=size(w,1); label(start)=0; f(start)=start;
+for i=1:n
+   if i~=start
+       label(i)=inf;
+end, end
+s(1)=start; u=start;
+while length(s)&lt;n
+   for i=1:n
+      ins=0;
+      for j=1:length(s)
+         if i==s(j)
+            ins=1;
+         end,  
+      end
+      if ins==0
+         v=i;
+         if label(v)&gt;(label(u)+w(u,v))
+            label(v)=(label(u)+w(u,v));
+         f(v)=u;
+         end,
+      end,
+   end   
+v1=0;
+   k=inf;
+   for i=1:n
+         ins=0;
+         for j=1:length(s)
+            if i==s(j)
+               ins=1;
+            end,
+         end
+         if ins==0
+            v=i;
+            if k&gt;label(v)
+               k=label(v);  v1=v;
+            end,  
+         end,  
+   end
+   s(length(s)+1)=v1;  
+   u=v1;
+end
+min=label(terminal); path(1)=terminal;
+i=1;
+while path(i)~=start
+      path(i+1)=f(path(i));
+      i=i+1 ;
+end
+path(i)=start;
+L=length(path);
+path=path(L:-1:1);
+</code></pre><blockquote>
+<p>测试数据（带权邻接矩阵范例）：</p>
+<p>测试数据1：<br>    [0     2     8     1   Inf   Inf   Inf   Inf   Inf   Inf   Inf;<br>     2     0     6   Inf     1   Inf   Inf   Inf   Inf   Inf   Inf;<br>     8     6     0     7     5     1     2   Inf   Inf   Inf   Inf;<br>     1   Inf     7     0   Inf   Inf     9   Inf   Inf   Inf   Inf;    Inf     1     5   Inf     0     3   Inf     2     9   Inf   Inf;<br>Inf   Inf     1   Inf     3     0     4   Inf     6   Inf   Inf;<br>Inf   Inf     2     9   Inf     4     0   Inf     3     1   Inf;<br>Inf   Inf   Inf   Inf     2   Inf   Inf     0     7   Inf     9;<br>Inf   Inf   Inf   Inf     9     6     3     7     0     1     2;<br>Inf   Inf   Inf   Inf   Inf   Inf     1   Inf     1     0     4;<br>Inf   Inf   Inf   Inf   Inf   Inf   Inf     9     2     4     0;];</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/22/MOOC算法学习笔记 - 深度优先搜索/" rel="next" title="MOOC算法学习笔记 - 深度优先搜索（一）">
+                <i class="fa fa-chevron-left"></i> MOOC算法学习笔记 - 深度优先搜索（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/23/非常非常奈斯的素材资源收藏/" rel="prev" title="非常非常奈斯的素材资源收藏">
+                非常非常奈斯的素材资源收藏 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="taleyoung" />
+            
+              <p class="site-author-name" itemprop="name">taleyoung</p>
+              <p class="site-description motion-element" itemprop="description">已经在这里等你很久了。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/taleyoung" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yourname@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/yourname" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/yourname" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/yourname" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1090117853" target="_blank" title="qq">
+                      
+                        <i class="fa fa-fw fa-qq"></i>qq</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">taleyoung</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

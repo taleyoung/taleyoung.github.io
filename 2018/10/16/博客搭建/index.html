@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="【写在前面】今天写写博客（个人网站）的搭建。从wordpress和hexo+github 两种方式进行搭建，重点讲解第二种，wordpress比较简单，先用10分钟介绍一下就ok啦。 先讨论一些哲学问题，我们为什么要搭博客？1.程序员必备技能，通过搭博客（即使未成功），你可以接触很多新的东西，比如nodejs（指不定就由此走进前端的大门了呢略略略），git。2.推荐刘未鹏博客：书写是为了更好的思考">
+<meta property="og:type" content="article">
+<meta property="og:title" content="博客搭建-wordpress&amp;hexo">
+<meta property="og:url" content="http://yoursite.com/2018/10/16/博客搭建/index.html">
+<meta property="og:site_name" content="Taleyoung&#39;s Blog">
+<meta property="og:description" content="【写在前面】今天写写博客（个人网站）的搭建。从wordpress和hexo+github 两种方式进行搭建，重点讲解第二种，wordpress比较简单，先用10分钟介绍一下就ok啦。 先讨论一些哲学问题，我们为什么要搭博客？1.程序员必备技能，通过搭博客（即使未成功），你可以接触很多新的东西，比如nodejs（指不定就由此走进前端的大门了呢略略略），git。2.推荐刘未鹏博客：书写是为了更好的思考">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-11-09T15:25:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="博客搭建-wordpress&amp;hexo">
+<meta name="twitter:description" content="【写在前面】今天写写博客（个人网站）的搭建。从wordpress和hexo+github 两种方式进行搭建，重点讲解第二种，wordpress比较简单，先用10分钟介绍一下就ok啦。 先讨论一些哲学问题，我们为什么要搭博客？1.程序员必备技能，通过搭博客（即使未成功），你可以接触很多新的东西，比如nodejs（指不定就由此走进前端的大门了呢略略略），git。2.推荐刘未鹏博客：书写是为了更好的思考">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/16/博客搭建/"/>
+
+
+
+
+
+  <title>博客搭建-wordpress&hexo | Taleyoung's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Taleyoung's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/16/博客搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="taleyoung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taleyoung's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">博客搭建-wordpress&hexo</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-16T17:05:52+08:00">
+                2018-10-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="【写在前面】"><a href="#【写在前面】" class="headerlink" title="【写在前面】"></a>【写在前面】</h1><p>今天写写博客（个人网站）的搭建。从wordpress和hexo+github 两种方式进行搭建，重点讲解第二种，wordpress比较简单，先用10分钟介绍一下就ok啦。</p>
+<p><strong>先讨论一些哲学问题，我们为什么要搭博客？</strong><br>1.程序员必备技能，通过搭博客（即使未成功），你可以接触很多新的东西，比如nodejs（指不定就由此走进前端的大门了呢略略略），git。<br>2.推荐刘未鹏博客：书写是为了更好的思考。<br>3.推荐《软技能：代码之外的生存之道》：博客可以塑造个人品牌。</p>
+<p><strong>过了这两个小时你会收获什么？</strong><br>1.运气好的话，你可能马上就拥有自己的博客了。<br>运气差的话，你可能要迟几天拥有博客了。<br>2.不管你运气咋样，你至少可以了解到建站的一些基本知识，了解到一些可能之后会经常用的软件或名词概念，知道搭建博客的基本步骤。</p>
+<h2 id="简单介绍一下两者的区别"><a href="#简单介绍一下两者的区别" class="headerlink" title="简单介绍一下两者的区别"></a>简单介绍一下两者的区别</h2><p><strong>wordpress</strong>：php和mysql开发的博客平台，十分简单且强大。目前很多网站都是wordpress搭建的。上线需要自己的域名和服务器。<br><strong>hexo</strong> ：简洁优雅。使用 <strong>Node.js</strong> 作为构建引擎，拥有着丰富的插件库，开源；它支持 Markdown ，方便了博客的撰写。并且，对服务器的要求非常低，<strong>低到可以使用github(国外)或者Coding.net(国内)提供的托管服务</strong>，我们可以利用hexo+github实现我们的博客网站。</p>
+<h2 id="一个网站需要什么？"><a href="#一个网站需要什么？" class="headerlink" title="一个网站需要什么？"></a>一个网站需要什么？</h2><p>简单来说，需要三样东西;<br><strong>域名+主机+网站程序（wordpress/hexo）。</strong></p>
+<h1 id="wordpress"><a href="#wordpress" class="headerlink" title="wordpress"></a>wordpress</h1><ol>
+<li>相关的配置文件 (wordpress + wamp) </li>
+<li>配置数据库 </li>
+<li>配置wp-config-php</li>
+<li>后续的wordpress后台提供的基本功能与主题插件</li>
+</ol>
+<p>搞定了√<br>想不到吧。</p>
+<h1 id="hexo-github"><a href="#hexo-github" class="headerlink" title="hexo+github"></a>hexo+github</h1><p><strong>首先需要下面两样东西</strong></p>
+<ul>
+<li>git :<a href="https://git-scm.com/" target="_blank" rel="noopener">https://git-scm.com/</a></li>
+<li>node.js : <a href="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a></li>
+<li>【nodejs专场】<br>JavaScript是一门脚本语言，它需要一个运行环境。就好像PHP需要Apache，JSP需要Tomcat等等…… 而NodeJS之前，JavaScript运行环境是浏览器，也就是JavaScript在网页中才能跑起来。NodeJS之后JavaScript又多了一个运行环境，就是NodeJS。</li>
+</ul>
+<p><strong>注册github （用户名  用小写字母。）</strong></p>
+<p><strong>创建Repository（仓库名  你的用户名.github.io）</strong></p>
+<p><strong>配置SSH keys相关</strong></p>
+<ol>
+<li><p>查看本机的SSH keys</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~/. ssh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生成SSH keys</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &quot;注册用的邮件地址@youremail.com&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>补充：<br>             1）大写的C<br>             2）会需要输入密码 即deploy项目的时候输入的密码 直接回车表示无密码。<br>             3）出现的页面会有保存id_rsa.pub的地址。通过这个找到id_rsa.pub的文件（记得勾选文件拓展名+隐藏的项目），找到之后txt打开全选复制</p>
+<ol start="3">
+<li>添加SSH keys 到你的github<br>/setting/ssh<br>title+keys</li>
+<li><p>设置 连接github</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line">The authenticity of host &apos;GitHub.com (207.97.227.239)&apos; can&apos;t be established.</span><br><span class="line">RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>完善用户信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name &quot;taleyoung&quot;//输入注册时的用户名</span><br><span class="line">$ git config --global user.email  &quot;1090117853@qq.com&quot;//填写注册邮箱</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>SSH key 搞定√</strong></p>
+<h2 id="搭建hexo"><a href="#搭建hexo" class="headerlink" title="搭建hexo"></a>搭建hexo</h2><pre><code>npm install -g hexo-cli
+</code></pre><p><strong>创建博客的本地文件夹（username.github.io）</strong><br><strong>生成博客初始配置文件</strong></p>
+<pre><code>$ hexo init
+</code></pre><p><strong>安装依赖包</strong></p>
+<pre><code>$ npm install
+</code></pre><p><strong>确保git部署</strong></p>
+<pre><code>$ npm install hexo-deployer-git --save
+</code></pre><p><strong>去见他的第一面</strong></p>
+<pre><code>$ hexo g （genarate）
+$ hexo s        (server)
+</code></pre><p><strong>配置博客文件</strong></p>
+<pre><code># Hexo Configuration
+## Docs: http://zespia.tw/hexo/docs/configure.html
+## Source: https://github.com/tommy351/hexo/
+
+# Site 这里的配置，哪项配置反映在哪里，可以参考我的博客
+title: Taleyoung&apos;s blog #博客名
+subtitle: to be continued... #副标题
+description: My blog #给搜索引擎看的，对网站的描述，可以自定义
+author: taleyoung #作者，在博客底部可以看到
+email: 1090117853@qq.com #你的联系邮箱
+language: zh-CN #中文。如果不填则默认英文
+
+# URL #这项暂不配置，绑定域名后，欲创建sitemap.xml需要配置该项
+## If your site is put in a subdirectory, set url as &apos;http://yoursite.com/child&apos; and root as &apos;/child/&apos;
+url: http://yoursite.com
+root: /
+permalink: :year/:month/:day/:title/
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+
+# Writing 文章布局、写作格式的定义，不修改
+new_post_name: :title.md # File name of new posts
+default_layout: post
+auto_spacing: false # Add spaces between asian characters and western characters
+titlecase: false # Transform title into titlecase
+max_open_file: 100
+filename_case: 0
+highlight:
+  enable: true
+  backtick_code_block: true
+  line_number: true
+  tab_replace:
+
+# Category &amp; Tag
+default_category: uncategorized
+category_map:
+tag_map:
+
+# Archives 默认值为2，这里都修改为1，相应页面就只会列出标题，而非全文
+## 2: Enable pagination
+## 1: Disable pagination
+## 0: Fully Disable
+archive: 1
+category: 1
+tag: 1
+
+# Server 不修改
+## Hexo uses Connect as a server
+## You can customize the logger format as defined in
+## http://www.senchalabs.org/connect/logger.html
+port: 4000
+logger: false
+logger_format:
+
+# Date / Time format 日期格式，可以修改成自己喜欢的格式
+## Hexo uses Moment.js to parse and display date
+## You can customize the date format as defined in
+## http://momentjs.com/docs/#/displaying/format/
+date_format: YYYY-M-D
+time_format: H:mm:ss
+
+# Pagination 每页显示文章数，可以自定义，贴主设置的是10
+## Set per_page to 0 to disable pagination
+per_page: 10
+pagination_dir: page
+
+# Disqus Disqus插件，我们会替换成“多说”，不修改
+disqus_shortname:
+
+# Extensions 这里配置站点所用主题和插件，暂时默认
+## Plugins: https://github.com/tommy351/hexo/wiki/Plugins
+## Themes: https://github.com/tommy351/hexo/wiki/Themes
+theme: landscape
+exclude_generator:
+plugins:
+- hexo-generator-feed
+- hexo-generator-sitemap
+
+# Deployment 站点部署到github要配置
+## Docs: http://zespia.tw/hexo/docs/deploy.html
+deploy:
+  type: git
+  repository: 
+  branch: master
+</code></pre><p><strong>第一次本地服务器跑一下</strong></p>
+<pre><code>$ hexo g #生成
+$ hexo s #启动本地服务，进行文章预览调试，退出服务用Ctrl+c
+</code></pre><p><strong>最最最后一步：部署到github</strong><br>在github主页上找到刚刚为博客建立的Repository<br>复制ssh码<br>配置博客文件的deploy</p>
+<pre><code>deploy:
+  type: git
+  repository: git@github.com:taleyoung/taleyoung.github.io.git
+  branch: master
+</code></pre><p><strong>部署上传</strong></p>
+<pre><code>$ hexo g
+$ hexo d
+</code></pre><p><strong>发布文章</strong></p>
+<pre><code>$ hexo new &quot;我的第一篇blog&quot;
+$ hexo clean
+$ hexo generate
+$ hexo server
+$hexo deploy
+</code></pre><p>new之后会生成文章的最基本信息<br>可用txt/notepad等打开 需要使用md语法    </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/13/web前端性能优化方法-小小的总结/" rel="next" title="web前端性能优化方法-小小的总结">
+                <i class="fa fa-chevron-left"></i> web前端性能优化方法-小小的总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="taleyoung" />
+            
+              <p class="site-author-name" itemprop="name">taleyoung</p>
+              <p class="site-description motion-element" itemprop="description">已经在这里等你很久了。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/taleyoung" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yourname@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/yourname" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/yourname" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/yourname" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1090117853" target="_blank" title="qq">
+                      
+                        <i class="fa fa-fw fa-qq"></i>qq</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#【写在前面】"><span class="nav-number">1.</span> <span class="nav-text">【写在前面】</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单介绍一下两者的区别"><span class="nav-number">1.1.</span> <span class="nav-text">简单介绍一下两者的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个网站需要什么？"><span class="nav-number">1.2.</span> <span class="nav-text">一个网站需要什么？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wordpress"><span class="nav-number">2.</span> <span class="nav-text">wordpress</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hexo-github"><span class="nav-number">3.</span> <span class="nav-text">hexo+github</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建hexo"><span class="nav-number">3.1.</span> <span class="nav-text">搭建hexo</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">taleyoung</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

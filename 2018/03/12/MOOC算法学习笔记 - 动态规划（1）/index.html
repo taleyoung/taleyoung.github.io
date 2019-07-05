@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="中国大学mooc视频地址 程序设计与算法（二）算法基础  直接看一道例题  例题一 数字三角形  （一）采用递归方法 思路：此题是标准的递归思维    首先想想第一步怎么走， 首先确定第一个是D[i][j]，那么下一步是D[i+1][j]或                        D[i+1][j+1]    如此便形成相似的循环，可以用递归解决 那么边界条件是什么呢？当递归到最">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MOOC算法学习笔记 - 动态规划（1）">
+<meta property="og:url" content="http://yoursite.com/2018/03/12/MOOC算法学习笔记 - 动态规划（1）/index.html">
+<meta property="og:site_name" content="Taleyoung&#39;s Blog">
+<meta property="og:description" content="中国大学mooc视频地址 程序设计与算法（二）算法基础  直接看一道例题  例题一 数字三角形  （一）采用递归方法 思路：此题是标准的递归思维    首先想想第一步怎么走， 首先确定第一个是D[i][j]，那么下一步是D[i+1][j]或                        D[i+1][j+1]    如此便形成相似的循环，可以用递归解决 那么边界条件是什么呢？当递归到最">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-11T18:12:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MOOC算法学习笔记 - 动态规划（1）">
+<meta name="twitter:description" content="中国大学mooc视频地址 程序设计与算法（二）算法基础  直接看一道例题  例题一 数字三角形  （一）采用递归方法 思路：此题是标准的递归思维    首先想想第一步怎么走， 首先确定第一个是D[i][j]，那么下一步是D[i+1][j]或                        D[i+1][j+1]    如此便形成相似的循环，可以用递归解决 那么边界条件是什么呢？当递归到最">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/12/MOOC算法学习笔记 - 动态规划（1）/"/>
+
+
+
+
+
+  <title>MOOC算法学习笔记 - 动态规划（1） | Taleyoung's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Taleyoung's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/MOOC算法学习笔记 - 动态规划（1）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="taleyoung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taleyoung's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MOOC算法学习笔记 - 动态规划（1）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-12T15:10:27+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>中国大学mooc视频地址 <a href="https://www.icourse163.org/learn/PKU-1001894005?tid=1002783037#/learn/announce" target="_blank" rel="noopener">程序设计与算法（二）算法基础
+</a></em></p>
+<p>直接看一道例题</p>
+<blockquote>
+<p>例题一 数字三角形</p>
+</blockquote>
+<h2 id="（一）采用递归方法"><a href="#（一）采用递归方法" class="headerlink" title="（一）采用递归方法"></a>（一）采用递归方法</h2><blockquote>
+<p><strong>思路：此题是标准的递归思维</strong><br>    首先想想第一步怎么走， 首先确定第一个是D[i][j]，那么下一步是D[i+1][j]或                        D[i+1][j+1]<br>    如此便形成相似的循环，可以用递归解决 那么边界条件是什么呢？当递归到最            后一行的时候就可以跳出 即if(i==n)为边界条件。<br>    【将原问题拆为若干子问题，在这里原问题（D[i][j]到最后的最大和）的子问题就是D[i][j]的下一个D[i+1][j]或D[i+1][j+1]到最后的最大和】</p>
+</blockquote>
+<p><strong>·······总结下来就是<br>一个位置到最后的最大和 等于 这个位置的[i+1][j]和[i+1][j+1]中到最后的最大和的较大值 加上这个位置本身</strong></p>
+<p>（递归代码如下：</p>
+<pre><code>#include&lt;iostream&gt;
+#include&lt;algorithm&gt;
+#define MAX 101
+using namespace std;
+int D[MAX][MAX];
+int n;
+int MaxSum(int i, int j){
+    if(i==n)
+        return D[i][j]
+    else{
+        int x = MaxSum(i+1,j);
+        int y = MaxSum(i+1,j+1);
+        return max(x,y)+D[i][j];
+}
+int main()
+{
+    int i,j;
+    cin &gt;&gt; n;
+    for(i = 1; i &lt;= n; i++)
+        for(j = 1; j &lt;= i; j++)
+            cin &gt;&gt; D[i][j];
+    cout &lt;&lt; MaxSum(1,1) &lt;&lt;endl;
+    return 0;
+}
+</code></pre><h2 id="（二）采用记忆递归型动归"><a href="#（二）采用记忆递归型动归" class="headerlink" title="（二）采用记忆递归型动归"></a>（二）采用记忆递归型动归</h2><pre><code>解决这种重复计算的方法即记下之前算过的从而避免重复：
+数字三角形的记忆递归型动归程序：
+
+动归代码如下：
+
+#include&lt;iostream&gt;
+#include&lt;algorithm&gt;
+#define MAX 101
+using namespace std;
+int D[MAX][MAX];
+int maxSum[MAX][MAX];        //存放算过的值
+int n;
+int MaxSum(int i, int j){
+    if(maxSum[i][j] != -1)        //判断是否算过了
+        return maxSum[i][j];
+    if(i==n)
+        maxSum[i][j] = D[i][j];
+    else{
+        int x = MaxSum(i+1,j);
+        int y = MaxSum(i+1,j+1);
+        maxSum[i][j] = max(x,y) + D[i][j];
+    }
+    return maxSum[i][j];        //整体return了 这点仔细想想
+int main()
+{
+    int i,j;
+    cin &gt;&gt; n;
+    for(i = 1; i &lt;= n; i++)
+        for(j = 1; j &lt;= i; j++){
+            cin &gt;&gt; D[i][j];
+            maxSum[i][j] = -1;
+        }
+    cout &lt;&lt; MaxSum(1,1) &lt;&lt;endl;
+    return 0;
+}
+</code></pre><h2 id="（三）将递归进阶成递推"><a href="#（三）将递归进阶成递推" class="headerlink" title="（三）将递归进阶成递推"></a>（三）将递归进阶成递推</h2><p>重新分析，可以从最后一行开始，一行行往上递推 </p>
+<pre><code>#include&lt;iostream&gt;
+#define MAX 101
+using namespace std;
+int main()
+{
+    int D[MAX][MAX];
+    int maxSum[MAX][MAX];
+    int n,i,j;
+    cin &gt;&gt; n;
+    for(i = 1; i &lt;= n; i++)
+        for(j = 1;j &lt;=i; j++)
+            cin &gt;&gt; D[i][j];
+    for(i = 1; i &lt;=n; i++)            //对边界条件进行初始化
+        maxSum[n][i] = D[n][i];        //最后一行的结果就是它本身
+    for(i = n-1; i&gt;=1; i--)        //从倒是第二行开始往上递推，
+        for(j = 1; j &lt;=i; j++)
+            maxSum[i][j] = max(maxSum[i+1][j],maxSum[i+1][j+1])+D[i][j];
+    cout &lt;&lt; maxSum[1][1] &lt;&lt;endl;
+    return 0;
+}
+</code></pre><h2 id="（四）递推的空间优化-—滚动数组（存疑）"><a href="#（四）递推的空间优化-—滚动数组（存疑）" class="headerlink" title="（四）递推的空间优化 —滚动数组（存疑）"></a>（四）递推的空间优化 —滚动数组（存疑）</h2><p>在三的递推中，发现其实并不需要一个maxSum[i][j]来记录结果，可以用一个maxSum[i]一维数组来记录，新纪录的可以将旧的结果覆盖，因为不要再用它了，然后再想想 发现其实可以用一个*maxSum 也可以实现</p>
+<pre><code>#include&lt;iostream&gt;
+#define MAX 101
+using namespace std;
+int main()
+{
+    int D[MAX][MAX];
+    int *maxSum;
+    int n,i,j;
+    cin &gt;&gt; n;
+    for(i = 1; i &lt;= n; i++)
+        for(j = 1;j &lt;=i; j++)
+            cin &gt;&gt; D[i][j];
+    maxSum = D[n];
+    for(i = n-1; i&gt;=1; i--)
+        for(j = 1; j &lt;=i; j++)
+            maxSum[j] = max(maxSum[j],maxSum[j+1])+D[i][j];
+    cout &lt;&lt; maxSum[1] &lt;&lt;endl;
+    return 0;
+}
+</code></pre><h2 id="（五）总结：从递归到递推-动规"><a href="#（五）总结：从递归到递推-动规" class="headerlink" title="（五）总结：从递归到递推/动规"></a>（五）总结：从递归到递推/动规</h2><blockquote>
+<ul>
+<li>**··递归到递推的一般转化方法：<pre><code>1.递归函数有n个参数，就定义一个n维的数组 
+2.数组的下标是递归函数参数的取值范围    
+3.数组元素的值是递归函数的返回值    
+4.从边界值出发，逐步填充数组，相当于计算递归函数值的逆过程**
+</code></pre></li>
+</ul>
+<ul>
+<li>**··动规解题的一般思路：<pre><code>1.将原问题拆分成若干小问题（类似于递归的思路），但与递归不同的是要将每次计算的结果存下来，避免重复计算。 【可参照上面数字三角形的例子】
+2.确定状态
+一个状态就是一个子问题，上述例子有多少数字就有多少状态
+3.确定一些初始状态（边界状态）的值
+4.确定状态转移方程
+    如何从一个或多个已知值的状态 求出另一个状态的值
+    可以用递推式表示，即状态转移方程。
+    如数字三角形中的状态转移方程**
+</code></pre></li>
+</ul>
+</blockquote>
+<p><strong>··能用动规解决的问题的特点：<br>    1.问题具有最优子结构性质。<br>指问题的最优解所包含的子问题的解也是最优的<br>     2.无后效性<br>当前的若干个状态值一旦确定，则此后过程的演变就只和这若干个状态值有关，和之前是采取哪种手段或哪条路径演变到当前的这若干个状态没关</strong></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/12/MOOC算法学习笔记 - 分治/" rel="next" title="MOOC算法学习笔记 - 分治">
+                <i class="fa fa-chevron-left"></i> MOOC算法学习笔记 - 分治
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/02/MOOC算法学习笔记 - 动态规划（3）/" rel="prev" title="MOOC算法学习笔记 - 动态规划（3）">
+                MOOC算法学习笔记 - 动态规划（3） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="taleyoung" />
+            
+              <p class="site-author-name" itemprop="name">taleyoung</p>
+              <p class="site-description motion-element" itemprop="description">已经在这里等你很久了。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/taleyoung" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yourname@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/yourname" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/yourname" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/yourname" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1090117853" target="_blank" title="qq">
+                      
+                        <i class="fa fa-fw fa-qq"></i>qq</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#（一）采用递归方法"><span class="nav-number">1.</span> <span class="nav-text">（一）采用递归方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（二）采用记忆递归型动归"><span class="nav-number">2.</span> <span class="nav-text">（二）采用记忆递归型动归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（三）将递归进阶成递推"><span class="nav-number">3.</span> <span class="nav-text">（三）将递归进阶成递推</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（四）递推的空间优化-—滚动数组（存疑）"><span class="nav-number">4.</span> <span class="nav-text">（四）递推的空间优化 —滚动数组（存疑）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（五）总结：从递归到递推-动规"><span class="nav-number">5.</span> <span class="nav-text">（五）总结：从递归到递推/动规</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">taleyoung</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

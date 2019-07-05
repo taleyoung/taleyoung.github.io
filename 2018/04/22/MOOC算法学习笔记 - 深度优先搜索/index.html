@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="##  例题一 城堡问题 //1表示西墙，2表示北墙，4表示东墙，8表示南墙。每个方块用代表其周围墙的数字之和表示。城堡的内墙被计算两次  接触的第一个深搜代码： #include&amp;lt;iostream&amp;gt; #include&amp;lt;stack&amp;gt; #include&amp;lt;cstring&amp;gt;    //memset函数所在库 using namespace std; int color">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MOOC算法学习笔记 - 深度优先搜索（一）">
+<meta property="og:url" content="http://yoursite.com/2018/04/22/MOOC算法学习笔记 - 深度优先搜索/index.html">
+<meta property="og:site_name" content="Taleyoung&#39;s Blog">
+<meta property="og:description" content="##  例题一 城堡问题 //1表示西墙，2表示北墙，4表示东墙，8表示南墙。每个方块用代表其周围墙的数字之和表示。城堡的内墙被计算两次  接触的第一个深搜代码： #include&amp;lt;iostream&amp;gt; #include&amp;lt;stack&amp;gt; #include&amp;lt;cstring&amp;gt;    //memset函数所在库 using namespace std; int color">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-11T18:01:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MOOC算法学习笔记 - 深度优先搜索（一）">
+<meta name="twitter:description" content="##  例题一 城堡问题 //1表示西墙，2表示北墙，4表示东墙，8表示南墙。每个方块用代表其周围墙的数字之和表示。城堡的内墙被计算两次  接触的第一个深搜代码： #include&amp;lt;iostream&amp;gt; #include&amp;lt;stack&amp;gt; #include&amp;lt;cstring&amp;gt;    //memset函数所在库 using namespace std; int color">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/22/MOOC算法学习笔记 - 深度优先搜索/"/>
+
+
+
+
+
+  <title>MOOC算法学习笔记 - 深度优先搜索（一） | Taleyoung's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Taleyoung's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/22/MOOC算法学习笔记 - 深度优先搜索/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="taleyoung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taleyoung's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MOOC算法学习笔记 - 深度优先搜索（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-22T15:10:27+08:00">
+                2018-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>## </p>
+<h2 id="例题一-城堡问题"><a href="#例题一-城堡问题" class="headerlink" title="例题一 城堡问题"></a>例题一 城堡问题</h2><blockquote>
+<p>//1表示西墙，2表示北墙，4表示东墙，8表示南墙。每个方块用代表其周围墙的数字之和表示。城堡的内墙被计算两次</p>
+</blockquote>
+<p>接触的第一个深搜代码：</p>
+<pre><code>#include&lt;iostream&gt;
+#include&lt;stack&gt;
+#include&lt;cstring&gt;    //memset函数所在库
+using namespace std;
+int color[60][60];    //存放每个点的颜色编号
+int room[60][60];    //存放每个房间的墙壁信息
+int roomNum =  0;    
+int R,C;
+int roomArea,maxRoomArea= 0;    //每个房间的大小和最大房间大小
+void Dfs(int i,int k){        //深搜函数
+    if(color[i][k])        //如果颜色不为0 说明已设置过 直接return
+        return;
+    ++roomArea;        //每进行一个Dfs，即搜过一个房间，即面积+1
+    color[i][k] = roomNum;    //用房间编号来编颜色
+    if((room[i][k] &amp; 1) == 0)    //决定下一步往哪走 
+        Dfs(i,k-1);
+    if((room[i][k] &amp; 2) == 0)
+        Dfs(i-1,k);
+    if((room[i][k] &amp; 4) == 0)
+        Dfs(i,k+1);
+    if((room[i][k] &amp; 8) == 0)
+        Dfs(i+1,k);
+}
+int main()
+{
+    cin &gt;&gt; R &gt;&gt; C;
+    for(int i=1; i &lt;= R; i++)
+        for(int j = 1; j &lt;= C; j++)
+           cin &gt;&gt; room[i][j];        //存下房间信息搜索都搜到底 即是一个房间
+    memset(color,0,sizeof(color));    //对color数组全部初始化为0
+    for(int i = 1; i &lt;= R; i++)    //两个for循环遍历每一个点
+        for(int j = 1; j &lt;= C; j++)
+            if(!color[i][j]){        //如果color为0 即没有搜过 执行此步 
+                roomNum++;    //每一次这样的
+                roomArea = 0;    //每个房间面积初始为0 将在Dfs函数中增加面积
+                Dfs(i,j);
+                maxRoomArea = max(roomArea,maxRoomArea);    //更新最大面积
+            }
+    cout &lt;&lt; roomNum &lt;&lt; endl;
+    cout &lt;&lt;maxRoomArea &lt;&lt; endl;
+    return 0;
+}
+</code></pre><h2 id="gt-2018-4-5反思："><a href="#gt-2018-4-5反思：" class="headerlink" title="&gt; 2018/4/5反思："></a>&gt; 2018/4/5反思：</h2><blockquote>
+<pre><code>1.  对main里遍历每个房间的for里面，初始化不清楚，
+2.  写dfs函数时 返回条件都不记得了！！
+3.  通过进制运算的还不会！
+</code></pre></blockquote>
+<p><strong>&gt; 讲一下&amp;运算符 A = 0011 1100 B = 0000 1101</strong></p>
+<blockquote>
+<p>—————– A&amp;B = 0000 1100 A|B = 0011 1101 A^B = 0011 0001 ~A  = 1100 0011</p>
+<p>在上面的题目中  1的二进制数为0000 0001  2为0000 0010  4为0000 0100  8为0000 1000<br>将room[i][k]&amp;2 ==0  即代表room[i][k] 的二进制数的第2位不为1 （&amp;的含义其实就是如果二进制对应位数都是1才为1<br>有0则为0）即没这堵墙</p>
+</blockquote>
+<h2 id="例题二-踩方格"><a href="#例题二-踩方格" class="headerlink" title="例题二 踩方格"></a>例题二 踩方格</h2><blockquote>
+<p>——————————————– 一个方格矩阵，矩阵边界在无穷远处。我们做如下假设：<br>a.    每走一步时，只能从当前方格移动一格，走到某个相邻的方格上；<br>b.    走过的格子立即塌陷无法再走第二次；<br>c.   只能向北、东、西三个方向走；</p>
+<p>请问：如果允许在方格矩阵上走n（n &lt;= 20）步，共有多少种不同的方案。2种走法只要有一步不一样，即被认为是不同的方案。</p>
+<hr>
+</blockquote>
+<p>（1）<br>下面的代码其实记忆递归型动规<br>但是也可以理解为图的深搜</p>
+<pre><code>#include&lt;iostream&gt;
+#include&lt;cstring&gt;
+using namespace std;
+int visited[30][50];
+int ways(int i, int j, int n){
+    if(n==0)
+        return 1;
+    visited[i][j] = 1;
+    int num = 0;
+    if(!visited[i+1][j]){
+        num+=ways(i+1,j,n-1);
+    }
+    if(!visited[i][j-1]){
+        num+=ways(i,j-1,n-1);
+    }
+    if(!visited[i][j+1]){
+        num+=ways(i,j+1,n-1);
+    }
+    visited[i][j] = 0;
+    return num;
+}
+int main()
+{
+    int n;
+    cin &gt;&gt; n;
+    memset(visited,0,sizeof(visited));
+    cout &lt;&lt; ways(0,25,n) &lt;&lt; endl;
+    return 0;
+}
+</code></pre><blockquote>
+<p>4/5 反思：</p>
+<pre><code>1.  很多深搜的套路都忘了，在求次数的问题中 一般边界条件都是return 1
+2.  记得vis记忆化搜索和回溯。
+3.  sum时三种走法（即三个dfs的总和）。
+</code></pre></blockquote>
+<p>（2）<br><strong>递推思路如下：<br>f[i]代表走i步的方法数；<br>思路一：（这种思路是网上搜到的，引出了思路二）<br>1.第i步向北走，有f[i-1]种方法；<br>2.第i-1步向北走的，第i步可以向东西走，那么有2<em>f[i-2]种方法；<br>3.第i-1步向北走的有f[i-2]种，第i-1步向东或者西走，然后第i步不向北走有f[i-1]-f[i-2]种；<br>最终有f[i]=f[i-1]+2</em>f[i-2]+(f[i-1]-f[i-2])种方法；<br>思路二：（其实就是思路一化简）<br>1.第i步至少可以向两个方向移动有2<em>f[i-1]种方法；<br>2.第i-1步向北的，第i步多一种方法，就是f[i-2]种；<br>最终有2</em>f[i-1]+f[i-2]种方法；</strong></p>
+<pre><code>#include&lt;bits/stdc++.h&gt;  
+using namespace std;  
+int main()  
+{  
+        int n,i,f[25]={1,3};  
+        cin&gt;&gt;n;  
+        for(i=2;i&lt;=n;i++)  
+        {  
+                f[i]=2*f[i-1]+f[i-2];   //f[i]=f[i-1]+2*f[i-2]+(f[i-1]-f[i-2])  
+        }  
+        cout&lt;&lt;f[n]&lt;&lt;endl;  
+}  
+</code></pre><p>（3）<br>dp[i][0]表示可以走i步且旁边两个砖块没有塌陷。 </p>
+<p>dp[i][1]表示可以走i步且旁边两个砖块有一个有塌陷。 </p>
+<pre><code>#include&lt;cstdio&gt; 
+#include&lt;cstring&gt; 
+#include&lt;cmath&gt; 
+#include&lt;string&gt; 
+#include&lt;algorithm&gt; 
+using namespace std;
+int dp[21][2]={0}; 
+int main()
+{ 
+int n; 
+scanf(&quot;%d&quot;,&amp;n); 
+dp[1][0]=3;
+dp[1][1]=2; 
+for(int i=2;i&lt;=n;i++){ 
+    dp[i][1]=dp[i-1][0]+dp[i-1][1]; 
+    dp[i][0]=dp[i-1][0]+2*dp[i-1][1]; 
+} 
+printf(&quot;%d&quot;,dp[n][0]); 
+return 0; 
+}
+</code></pre><h2 id="例题三-寻路问题"><a href="#例题三-寻路问题" class="headerlink" title="例题三 寻路问题"></a>例题三 寻路问题</h2><blockquote>
+<p>—————————————- N个城市，编号1到N。城市间有R条单向道路。 每条道路连接两个城市，有长度和过路费两个属性。 Bob只有K块钱，他想从城市1走到城市N。<br>问最短共需要走多长的路。<br>如果到不了N，输出-1<br>2&lt;=N&lt;=100 0&lt;=K&lt;=10000 1&lt;=R&lt;=10000 每条路的长度 L, 1 &lt;= L &lt;= 100 每条路的过路费T , 0&lt;= T &lt;= 100</p>
+<p>sample input K N R s1 e1 L1 R1</p>
+<p>5 6 7 1 2 2 3 2 4 3 3 3 4 2 4 1 3 4 1 4 6 2 1 3 5 2 0 5 4 3 2 sample<br>output 11</p>
+<hr>
+</blockquote>
+<p>思路：<br>需要用一个邻接表来存放数据，用动态数组    vector&lt; vector<road> &gt;G(110);    来表示邻接表，实质上这是一个二维数组，G[s] 是一维数组，输入的每个下标是起点。<br>优化的方法：</road></p>
+<p>1.可行性剪枝<br>如果走的这条路花的钱已经大于所有的钱 即跳出此路<br>2.最优性剪枝<br>如果走的这条路的长度已经大于最短的路， 即跳出此路<br>3.保存中间结果 进行最优性剪枝<br>如果在相同的节点，之前来过 ，之前在这个节点走的路很短，且在二者所花钱一样，那么就跳出此路。</p>
+<pre><code>#include&lt;iostream&gt;
+#include&lt;cstring&gt;
+#include&lt;vector&gt;    //动态数组
+using namespace std;
+int K,N,R;
+struct Road{       //含路的三个信息  类似于图中的边
+    int d,L,t;
+};
+vector&lt; vector&lt;Road&gt; &gt;G(110);    //用vector定义的二维数组
+int minL[110][10010];    //存放某个节点所走过的最短路
+int minLen;
+int totalLen;
+int totalCost;
+int visited[110];    //存放某个节点是否走过
+void Dfs(int s){
+    if( s==N ){                    //起点==终点  即搜索完毕
+        minLen = min(minLen,totalLen);    //刷新minLen
+        return ;
+    }
+    for(int i = 0; i &lt; G[s].size(); i++){    //遍历一维G[s]数组的每一个数
+        Road r = G[s][i];                 //这里是指遍历G[s]中的每一个G[s][i]
+        if(totalCost + r.t &gt; K)    //（剪枝）如果花的钱大于总钱数 跳出
+            continue;
+        if(!visited[r.d]){        //只有没被访问过的才进去
+            if(r.L + totalLen &gt;= minLen)    //（剪枝）如果走的路已经大于最短路径 跳出
+                continue;
+            if(totalLen + r.L &gt;= minL[r.d][totalCost + r.t])
+                continue;                    //（剪枝）如果这个点相同钱数比以前要走的路多 跳
+            minL[r.d][totalCost + r.t] = totalLen + r.L;    //更新每个点已走的路
+            totalLen += r.L;        //这路走了 开始增加信息
+            totalCost += r.t;
+            visited[r.d] = 1;
+            Dfs(r.d);        //遍历下一个节点，即Road中的终点r.d;
+            visited[r.d] = 0;    //要注意 记得换其他路的时候把已尝试的路信息减掉
+            totalLen -= r.L;
+            totalCost -= r.t;
+        }
+    }
+}
+int main()
+{
+    cin &gt;&gt; K &gt;&gt; N &gt;&gt; R;
+    for(int i=0; i &lt; R; i++){        //读入路的信息
+        int s;    
+        Road r;
+        cin &gt;&gt; s &gt;&gt; r.d &gt;&gt; r.L &gt;&gt; r.t;
+        if( s != r.d)
+            G[s].push_back(r);        //c++ 在动态数组末尾添加值
+    }
+    memset(visited, 0, sizeof(visited));
+    totalLen = 0;
+    for(int i= 0; i &lt; 110; i++)     //将minL（存放每个点经历的最短路）初始化为无穷大
+        for(int j = 0; j &lt; 10001; j++)
+            minL[i][j] = 1 &lt;&lt; 30;
+
+    minLen = 1 &lt;&lt; 30;    //最短路初始化 为无穷大
+    totalCost = 0;
+    visited[1] = 1;    //之前要把此路设置成走过
+    Dfs(1);
+    if(minLen &lt; (1 &lt;&lt; 30))
+        cout &lt;&lt; minLen &lt;&lt; endl;
+    else
+        cout &lt;&lt; &quot;-1&quot; &lt;&lt; endl;
+}
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/02/MOOC算法学习笔记 - 动态规划（3）/" rel="next" title="MOOC算法学习笔记 - 动态规划（3）">
+                <i class="fa fa-chevron-left"></i> MOOC算法学习笔记 - 动态规划（3）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/12/数学建模部分算法-总结/" rel="prev" title="数学建模部分算法-总结">
+                数学建模部分算法-总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="taleyoung" />
+            
+              <p class="site-author-name" itemprop="name">taleyoung</p>
+              <p class="site-description motion-element" itemprop="description">已经在这里等你很久了。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/taleyoung" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yourname@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/yourname" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/yourname" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/yourname" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1090117853" target="_blank" title="qq">
+                      
+                        <i class="fa fa-fw fa-qq"></i>qq</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#例题一-城堡问题"><span class="nav-number">1.</span> <span class="nav-text">例题一 城堡问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gt-2018-4-5反思："><span class="nav-number">2.</span> <span class="nav-text">&gt; 2018/4/5反思：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例题二-踩方格"><span class="nav-number">3.</span> <span class="nav-text">例题二 踩方格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例题三-寻路问题"><span class="nav-number">4.</span> <span class="nav-text">例题三 寻路问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">taleyoung</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

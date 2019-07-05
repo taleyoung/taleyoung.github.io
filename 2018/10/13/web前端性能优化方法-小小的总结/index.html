@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一.图片懒加载原理：图片的加载是由src的值引起，当对src赋值时浏览器就会请求图片资源，基于这个，可以利用html5属性data-XXX来保存图片的路径，当我们需要加载图片的时候才利用js将data-xxx的值赋予src，从而进行一定程度上的性能优化。简单介绍一下实现方式 1.自己写轮子，通过上述原理，用js自己手写 2.使用jquery-lazyload.js，属于jQuery的插件，需要依赖">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web前端性能优化方法-小小的总结">
+<meta property="og:url" content="http://yoursite.com/2018/10/13/web前端性能优化方法-小小的总结/index.html">
+<meta property="og:site_name" content="Taleyoung&#39;s Blog">
+<meta property="og:description" content="一.图片懒加载原理：图片的加载是由src的值引起，当对src赋值时浏览器就会请求图片资源，基于这个，可以利用html5属性data-XXX来保存图片的路径，当我们需要加载图片的时候才利用js将data-xxx的值赋予src，从而进行一定程度上的性能优化。简单介绍一下实现方式 1.自己写轮子，通过上述原理，用js自己手写 2.使用jquery-lazyload.js，属于jQuery的插件，需要依赖">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-14T03:25:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web前端性能优化方法-小小的总结">
+<meta name="twitter:description" content="一.图片懒加载原理：图片的加载是由src的值引起，当对src赋值时浏览器就会请求图片资源，基于这个，可以利用html5属性data-XXX来保存图片的路径，当我们需要加载图片的时候才利用js将data-xxx的值赋予src，从而进行一定程度上的性能优化。简单介绍一下实现方式 1.自己写轮子，通过上述原理，用js自己手写 2.使用jquery-lazyload.js，属于jQuery的插件，需要依赖">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/13/web前端性能优化方法-小小的总结/"/>
+
+
+
+
+
+  <title>web前端性能优化方法-小小的总结 | Taleyoung's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Taleyoung's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/13/web前端性能优化方法-小小的总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="taleyoung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taleyoung's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">web前端性能优化方法-小小的总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-13T15:10:27+08:00">
+                2018-10-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一-图片懒加载"><a href="#一-图片懒加载" class="headerlink" title="一.图片懒加载"></a>一.图片懒加载</h2><p><strong>原理</strong>：图片的加载是由src的值引起，当对src赋值时浏览器就会请求图片资源，基于这个，可以利用html5属性data-XXX来保存图片的路径，当我们需要加载图片的时候才利用js将data-xxx的值赋予src，从而进行一定程度上的性能优化。<br><strong><em>简单介绍一下实现方式</em></strong></p>
+<p><strong>1.自己写轮子，通过上述原理，用js自己手写</strong></p>
+<p><strong>2.使用jquery-lazyload.js，属于jQuery的插件，需要依赖jQuery。</strong> </p>
+<p><em>引入插件</em></p>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery-3.2.1.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.lazyload.min.js&quot;&gt;&lt;/script&gt;
+</code></pre><p><em>html写法</em></p>
+<pre><code>&lt;img class=&quot;lazy&quot; data-original=&quot;images/p1.jpg&quot; style=&quot;margin-top:500px&quot; height=&quot;300&quot;&gt;
+</code></pre><p><em>jq代码进行参数调节</em></p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+    $(function() {
+        $(&quot;img.lazy&quot;).lazyload();
+    }) &lt;/script&gt;
+</code></pre><p>jquery-lazyload.js参数介绍<br>$(function() {<br>     $(“img.lazy”).lazyload({<br>        threshold :100,        //实现滚到距离其xx px时就加载<br>        placeholder: “images/loading.gif”//为某一图片路径.此图片用来占据将要加载的图片的位置,待图片加载时,占位图则会隐藏<br>        event : “click”        //触发定义的事件时，图片才开始加载<br>        effects:”fadeIn”        //图片显示时的效果，默认是show。<br>        container: $(“#container”)     //值为某容器.lazyload默认在拉动浏览器滚动条时生效,这个参数可以让你在拉动某DIV的滚动条时依次加载其中的图片<br>        failure_limit : 20            //插件找到 20 个不在可见区域的图片时才停止搜索<br>        skip_invisible : false    //想要加载隐藏图片.设置skip_invisible为false<br>    });<br>})</p>
+<p><strong>3.– echojs实现方式：（推荐）</strong><br>echo.js相比与jquery-lazyload.js主要有以下两个优点：</p>
+<ol>
+<li>不依赖jquery</li>
+<li>参数短小精悍，是我们最需要设置的两项</li>
+<li>轻巧 适合普通工程</li>
+</ol>
+<p><em>引入插件库</em></p>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;js/echo.min.js&quot;&gt;&lt;/script&gt;
+</code></pre><p><em>html</em></p>
+<pre><code>&lt;img class=&quot;lazy&quot; data-echo=&quot;images/p1.jpg&quot; style=&quot;margin-top:500px&quot; height=&quot;300&quot;&gt;
+</code></pre><p><em>js调参</em></p>
+<pre><code>echo.init({
+//离可视区域多少像素的图片可以被加载
+          offset: 500, 
+ //图片延时多少毫秒加载
+       　throttle: 1000
+});
+</code></pre><h2 id="二-减少http请求"><a href="#二-减少http请求" class="headerlink" title="二.减少http请求"></a>二.减少http请求</h2><p>80%~90%时间花在了下载页面中的所有组件进行的HTTP请求上。因此，改善响应时间最简单的途径就是减少HTTP请求的数量。<br>主要通过以下途径<br><strong>1.CSS Sprites：</strong><br>可以直接参考相关的在线工具<br><strong>2.合并css，js（效果明显）</strong><br>在css/js 文件夹中 创建debug.txt 输入下述代码</p>
+<pre><code>(其实就是windows自带的bat操作)
+    copy 1.css+2.css sum.css \b
+</code></pre><p>save之后将后缀txt改成bat文件 运行即可<br>但是必须检验一下，防止莫名其妙出现一些问题=  =</p>
+<p><strong>3.精简css/js 可采用压缩的方法</strong><br><a href="http://tool.oschina.net/jscompress?type=2" target="_blank" rel="noopener">http://tool.oschina.net/jscompress?type=2</a></p>
+<h2 id="三-图片-amp-视频压缩（最应该做的事情）"><a href="#三-图片-amp-视频压缩（最应该做的事情）" class="headerlink" title="三.图片&amp;视频压缩（最应该做的事情）"></a>三.图片&amp;视频压缩（最应该做的事情）</h2><p><a href="https://www.picdiet.com/" target="_blank" rel="noopener">https://www.picdiet.com/</a><br>可以参考在线<br>进行压缩<br>能压多小压多小。。</p>
+<h2 id="四-使用cdn加速"><a href="#四-使用cdn加速" class="headerlink" title="四.使用cdn加速"></a>四.使用cdn加速</h2><p>去网上copy一段原理</p>
+<blockquote>
+<p>cdn——维基百科给出的解释是：内容分发网络（Content delivery network或Content distribution<br>network，缩写：CDN）。简单来说它主要的工作是把我们需要被分发的内容分发到世界各地的各个节点上，让世界各地的人都可以在距离最近的网络节点拿到想要拿到的内容，减少网络传输距离从而达到加速的目的（需要提过资源绝对地址告诉cdn厂商，让厂商去智能拉取）。当用户发起内容请求时，通过cdn厂商的智能DNS域名解析拿到cdn厂商边缘节点服务器的ip（cdn厂商会在运营商注册），然后向边缘节点服务器发起请求，请求内容数据(这件事情由浏览器完成)，边缘节点会检测当前节点是否有数据，如果没有就去front（父级节点，父级可能还会有父级节点，不同的网络环境策略会略有不同）节点要，如果还找不到就去源站拿，并依次序返回。如果某个边缘节点可以找到，会先校验内容有效期，当确定有效期之后返回给用户。</p>
+</blockquote>
+<h2 id="五-还有其他一些小细节"><a href="#五-还有其他一些小细节" class="headerlink" title="五.还有其他一些小细节"></a>五.还有其他一些小细节</h2><p>CSS放在页面最上部，javascript放在页面最下面<br>写css时多class多合并，注意编程规范，尽量少写内联标签…<br>精简css js<br>避免css表达式<br>等等。</p>
+<h2 id="六-其他"><a href="#六-其他" class="headerlink" title="六.其他"></a>六.其他</h2><p>其他的还有很多企业化工程需要考虑的性能优化方法，也许以后会接触吧~</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/22/F422实验室-第二次考核/" rel="next" title="常用算法的javascript实现">
+                <i class="fa fa-chevron-left"></i> 常用算法的javascript实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/16/博客搭建/" rel="prev" title="博客搭建-wordpress&hexo">
+                博客搭建-wordpress&hexo <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="taleyoung" />
+            
+              <p class="site-author-name" itemprop="name">taleyoung</p>
+              <p class="site-description motion-element" itemprop="description">已经在这里等你很久了。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/taleyoung" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yourname@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/yourname" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/yourname" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/yourname" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1090117853" target="_blank" title="qq">
+                      
+                        <i class="fa fa-fw fa-qq"></i>qq</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-图片懒加载"><span class="nav-number">1.</span> <span class="nav-text">一.图片懒加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-减少http请求"><span class="nav-number">2.</span> <span class="nav-text">二.减少http请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-图片-amp-视频压缩（最应该做的事情）"><span class="nav-number">3.</span> <span class="nav-text">三.图片&amp;视频压缩（最应该做的事情）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-使用cdn加速"><span class="nav-number">4.</span> <span class="nav-text">四.使用cdn加速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-还有其他一些小细节"><span class="nav-number">5.</span> <span class="nav-text">五.还有其他一些小细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六-其他"><span class="nav-number">6.</span> <span class="nav-text">六.其他</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">taleyoung</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
