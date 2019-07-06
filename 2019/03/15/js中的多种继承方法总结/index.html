@@ -79,16 +79,17 @@
 
 
 
-<meta name="description" content="已经在这里等你很久了。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Taleyoung&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2018/index.html">
+<meta name="description" content="构造函数继承1234567891011121314151617function Parent1() &amp;#123;  this.name = &amp;quot;Parent1&amp;quot;;  this.arr = [1, 2];&amp;#125;Parent1.prototype.sayName = function() &amp;#123;  console.log(&amp;quot;this.name&amp;quot;, th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js中的多种继承方法总结">
+<meta property="og:url" content="http://yoursite.com/2019/03/15/js中的多种继承方法总结/index.html">
 <meta property="og:site_name" content="Taleyoung&#39;s Blog">
-<meta property="og:description" content="已经在这里等你很久了。">
+<meta property="og:description" content="构造函数继承1234567891011121314151617function Parent1() &amp;#123;  this.name = &amp;quot;Parent1&amp;quot;;  this.arr = [1, 2];&amp;#125;Parent1.prototype.sayName = function() &amp;#123;  console.log(&amp;quot;this.name&amp;quot;, th">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-05T06:18:00.948Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Taleyoung&#39;s Blog">
-<meta name="twitter:description" content="已经在这里等你很久了。">
+<meta name="twitter:title" content="js中的多种继承方法总结">
+<meta name="twitter:description" content="构造函数继承1234567891011121314151617function Parent1() &amp;#123;  this.name = &amp;quot;Parent1&amp;quot;;  this.arr = [1, 2];&amp;#125;Parent1.prototype.sayName = function() &amp;#123;  console.log(&amp;quot;this.name&amp;quot;, th">
 
 
 
@@ -118,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2018/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/03/15/js中的多种继承方法总结/"/>
 
 
 
 
 
-  <title>Archive | Taleyoung's Blog</title>
+  <title>js中的多种继承方法总结 | Taleyoung's Blog</title>
   
 
 
@@ -143,7 +144,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -247,407 +248,147 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/15/js中的多种继承方法总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="taleyoung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taleyoung's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">js中的多种继承方法总结</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-15T14:17:04+08:00">
+                2019-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Um..! 15 posts in total. Keep on posting.
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
+            
+          
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/10/16/博客搭建/" itemprop="url">
-              
-                <span itemprop="name">博客搭建-wordpress&hexo</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-10-16T17:05:52+08:00"
-              content="2018-10-16" >
-          10-16
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/10/13/web前端性能优化方法-小小的总结/" itemprop="url">
-              
-                <span itemprop="name">web前端性能优化方法-小小的总结</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-10-13T15:10:27+08:00"
-              content="2018-10-13" >
-          10-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/22/F422实验室-第二次考核/" itemprop="url">
-              
-                <span itemprop="name">常用算法的javascript实现</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-22T15:10:27+08:00"
-              content="2018-09-22" >
-          09-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h4 id="构造函数继承"><a href="#构造函数继承" class="headerlink" title="构造函数继承"></a>构造函数继承</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function Parent1() &#123;</span><br><span class="line">  this.name = &quot;Parent1&quot;;</span><br><span class="line">  this.arr = [1, 2];</span><br><span class="line">&#125;</span><br><span class="line">Parent1.prototype.sayName = function() &#123;</span><br><span class="line">  console.log(&quot;this.name&quot;, this.name);</span><br><span class="line">&#125;;</span><br><span class="line">function Child1() &#123;</span><br><span class="line">  Parent1.call(this);</span><br><span class="line">  this.childName = &quot;child1&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let o1 = new Child1();</span><br><span class="line">let o2 = new Child2();</span><br><span class="line">console.log(&quot;o1,o2&quot;, o1, o2);</span><br><span class="line">o1.arr.push(3);</span><br><span class="line">console.log(&quot;o1,o2&quot;, o1, o2);</span><br></pre></td></tr></table></figure>
+<h4 id="通过原型链继承"><a href="#通过原型链继承" class="headerlink" title="通过原型链继承"></a>通过原型链继承</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function Parent2() &#123;</span><br><span class="line">  this.name = &quot;Parent2&quot;;</span><br><span class="line">  this.arr = [1, 2];</span><br><span class="line">&#125;</span><br><span class="line">function Child2() &#123;</span><br><span class="line">  this.childName = &quot;child2&quot;;</span><br><span class="line">&#125;</span><br><span class="line">Child2.prototype = new Parent();</span><br></pre></td></tr></table></figure>
+<h4 id="组合式的继承"><a href="#组合式的继承" class="headerlink" title="组合式的继承"></a>组合式的继承</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function Parent3() &#123;</span><br><span class="line">  this.name = &quot;parent3&quot;;</span><br><span class="line">  this.arr = [1, 2];</span><br><span class="line">&#125;</span><br><span class="line">function Child3() &#123;</span><br><span class="line">  Parent3.call(this);</span><br><span class="line">  this.childName = &quot;child3&quot;;</span><br><span class="line">&#125;</span><br><span class="line">//第一种：这样的缺点是一共进行了两次new 操作</span><br><span class="line">Child3.prototype = new Parent3();</span><br><span class="line">//第二种：问题是由Child3创建的实例 原型链既有Child3也有Parent3</span><br><span class="line">Child3.prototype = Parent3.prototype;</span><br><span class="line">//第三种</span><br><span class="line">Child3.prototype = Object.create(Parent3.prototype);</span><br><span class="line">Child3.prototype.constructor = Child3;</span><br></pre></td></tr></table></figure>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/22/各大官网的字体收藏/" itemprop="url">
-              
-                <span itemprop="name">各大官网的字体收藏</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-22T09:47:54+08:00"
-              content="2018-09-22" >
-          09-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/23/非常非常奈斯的素材资源收藏/" itemprop="url">
-              
-                <span itemprop="name">非常非常奈斯的素材资源收藏</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-23T16:37:39+08:00"
-              content="2018-08-23" >
-          08-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/12/数学建模部分算法-总结/" itemprop="url">
-              
-                <span itemprop="name">数学建模部分算法-总结</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-12T15:10:27+08:00"
-              content="2018-08-12" >
-          08-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/04/22/MOOC算法学习笔记 - 深度优先搜索/" itemprop="url">
-              
-                <span itemprop="name">MOOC算法学习笔记 - 深度优先搜索（一）</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-22T15:10:27+08:00"
-              content="2018-04-22" >
-          04-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/04/02/MOOC算法学习笔记 - 动态规划（3）/" itemprop="url">
-              
-                <span itemprop="name">MOOC算法学习笔记 - 动态规划（3）</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-02T15:10:27+08:00"
-              content="2018-04-02" >
-          04-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/03/12/MOOC算法学习笔记 - 动态规划（1）/" itemprop="url">
-              
-                <span itemprop="name">MOOC算法学习笔记 - 动态规划（1）</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-12T15:10:27+08:00"
-              content="2018-03-12" >
-          03-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/02/12/MOOC算法学习笔记 - 分治/" itemprop="url">
-              
-                <span itemprop="name">MOOC算法学习笔记 - 分治</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-02-12T15:10:27+08:00"
-              content="2018-02-12" >
-          02-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/23/数组常用方法与常见算法/" rel="next" title="数组常用方法与常见算法">
+                <i class="fa fa-chevron-left"></i> 数组常用方法与常见算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/03/记一次taro项目中对redux模板代码的封装/" rel="prev" title="记一次taro项目中对redux模板代码的封装">
+                记一次taro项目中对redux模板代码的封装 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -655,6 +396,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -675,8 +420,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -762,6 +516,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#构造函数继承"><span class="nav-number">1.</span> <span class="nav-text">构造函数继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过原型链继承"><span class="nav-number">2.</span> <span class="nav-text">通过原型链继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#组合式的继承"><span class="nav-number">3.</span> <span class="nav-text">组合式的继承</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -902,6 +672,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

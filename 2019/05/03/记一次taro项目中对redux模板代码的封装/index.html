@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Redux 是一个 JavaScript 应用状态管理的库，它帮助你编写行为一致，并易于测试的代码，而且它非常迷你，只有 2KB。 Redux 有一点和别的前端库或框架不同，它不单单是一套类库，它更是一套方法论，告诉你如何去构建一个状态可预测的应用。 但是同时在使用 redux 的过程中，需要写很多的模板代码，比如在接下来通过一个例子将会看到 首先先来温习一下 redux 吧～ redux 的三大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次taro项目中对redux模板代码的封装">
+<meta property="og:url" content="http://yoursite.com/2019/05/03/记一次taro项目中对redux模板代码的封装/index.html">
+<meta property="og:site_name" content="Taleyoung&#39;s Blog">
+<meta property="og:description" content="Redux 是一个 JavaScript 应用状态管理的库，它帮助你编写行为一致，并易于测试的代码，而且它非常迷你，只有 2KB。 Redux 有一点和别的前端库或框架不同，它不单单是一套类库，它更是一套方法论，告诉你如何去构建一个状态可预测的应用。 但是同时在使用 redux 的过程中，需要写很多的模板代码，比如在接下来通过一个例子将会看到 首先先来温习一下 redux 吧～ redux 的三大">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-06T01:56:42.098Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记一次taro项目中对redux模板代码的封装">
+<meta name="twitter:description" content="Redux 是一个 JavaScript 应用状态管理的库，它帮助你编写行为一致，并易于测试的代码，而且它非常迷你，只有 2KB。 Redux 有一点和别的前端库或框架不同，它不单单是一套类库，它更是一套方法论，告诉你如何去构建一个状态可预测的应用。 但是同时在使用 redux 的过程中，需要写很多的模板代码，比如在接下来通过一个例子将会看到 首先先来温习一下 redux 吧～ redux 的三大">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/03/记一次taro项目中对redux模板代码的封装/"/>
+
+
+
+
+
+  <title>记一次taro项目中对redux模板代码的封装 | Taleyoung's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Taleyoung's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/03/记一次taro项目中对redux模板代码的封装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="taleyoung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taleyoung's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">记一次taro项目中对redux模板代码的封装</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-03T09:56:10+08:00">
+                2019-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Redux 是一个 JavaScript 应用状态管理的库，它帮助你编写行为一致，并易于测试的代码，而且它非常迷你，只有 2KB。</p>
+<p>Redux 有一点和别的前端库或框架不同，它不单单是一套类库，它更是一套方法论，告诉你如何去构建一个状态可预测的应用。</p>
+<p>但是同时在使用 redux 的过程中，需要写很多的模板代码，比如在接下来通过一个例子将会看到</p>
+<p>首先先来温习一下 redux 吧～</p>
+<h5 id="redux-的三大原则"><a href="#redux-的三大原则" class="headerlink" title="redux 的三大原则"></a>redux 的三大原则</h5><ul>
+<li>单一数据源<br>这使得来自服务端的 state 可以轻易地注入到客户端中；并且，由于是单一的 state 树，代码调试、以及“撤销/重做”这类功能的实现也变得轻而易举。</li>
+<li>只读的 state<br>唯一改变 state 的方法就是触发 action，action 是一个用于描述已发生事件的普通对象。</li>
+<li>使用纯函数进行修改<br>为每个 action 用纯函数编写 reducer 来描述如何修改 state 树<blockquote>
+<p>纯函数即满足以下两点 1.函数在有相同的输入值时，产生相同的输出 2.函数中不包含任何会产生副作用的语句</p>
+</blockquote>
+</li>
+</ul>
+<p>reducer 要做到只要传入参数相同，返回计算得到的下一个 state 就一定相同。没有特殊情况、没有副作用，没有 API 请求、没有变量修改，只进行单纯执行计算。</p>
+<h5 id="通过一个-todolist-的例子来思考一下模板语法在何处以及如何才难减少"><a href="#通过一个-todolist-的例子来思考一下模板语法在何处以及如何才难减少" class="headerlink" title="通过一个 todolist 的例子来思考一下模板语法在何处以及如何才难减少"></a>通过一个 todolist 的例子来思考一下模板语法在何处以及如何才难减少</h5><ul>
+<li><strong>入口文件</strong><br>index.js</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;</span><br><span class="line">import &#123; render &#125; from &apos;react-dom&apos;</span><br><span class="line">import &#123; Provider &#125; from &apos;react-redux&apos;</span><br><span class="line">import &#123; createStore &#125; from &apos;redux&apos;</span><br><span class="line">import rootReducer from &apos;./reducers&apos;</span><br><span class="line">import App from &apos;./components/App&apos;</span><br><span class="line"></span><br><span class="line">const store = createStore(rootReducer)</span><br><span class="line"></span><br><span class="line">render(</span><br><span class="line">  &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">    &lt;App /&gt;</span><br><span class="line">  &lt;/Provider&gt;,</span><br><span class="line">  document.getElementById(&apos;root&apos;)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>创建 actino</strong><br>actions/index.js</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">let nextTodoId = 0</span><br><span class="line">export const addTodo = text =&gt; (&#123;</span><br><span class="line">  type: &apos;ADD_TODO&apos;,</span><br><span class="line">  id: nextTodoId++,</span><br><span class="line">  text</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export const setVisibilityFilter = filter =&gt; (&#123;</span><br><span class="line">  type: &apos;SET_VISIBILITY_FILTER&apos;,</span><br><span class="line">  filter</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export const toggleTodo = id =&gt; (&#123;</span><br><span class="line">  type: &apos;TOGGLE_TODO&apos;,</span><br><span class="line">  id</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>编写 reducers</strong></li>
+</ul>
+<p>reducers/todos.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">const todos = (state = [], action) =&gt; &#123;</span><br><span class="line">  switch (action.type) &#123;</span><br><span class="line">    case &apos;ADD_TODO&apos;:</span><br><span class="line">      return [</span><br><span class="line">        ...state,</span><br><span class="line">        &#123;</span><br><span class="line">          id: action.id,</span><br><span class="line">          text: action.text,</span><br><span class="line">          completed: false</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    case &apos;TOGGLE_TODO&apos;:</span><br><span class="line">      return state.map(todo =&gt;</span><br><span class="line">        todo.id === action.id ? &#123; ...todo, completed: !todo.completed &#125; : todo</span><br><span class="line">      )</span><br><span class="line">    default:</span><br><span class="line">      return state</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default todos</span><br></pre></td></tr></table></figure>
+<p>reducers/index.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import &#123; combineReducers &#125; from &apos;redux&apos;</span><br><span class="line">import todos from &apos;./todos&apos;</span><br><span class="line">import visibilityFilter from &apos;./visibilityFilter&apos;</span><br><span class="line"></span><br><span class="line">export default combineReducers(&#123;</span><br><span class="line">  todos</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="分析例子并思考如何进行封装"><a href="#分析例子并思考如何进行封装" class="headerlink" title="分析例子并思考如何进行封装"></a>分析例子并思考如何进行封装</h4><p><strong>对这段简短的 redux 代码进行分析，发现其实单独看每一步已经比较精简了，但是当步骤多了之后，尤其是创建 action 的过程中，基本都是繁琐的代码，改变的几乎只有 data，我们在具体组件调用的时候只会接触到 data，思路来了！封装一个函数，暴露出 data 即可，说干就干！下面来看下在小程序项目中我对其的封装</strong></p>
+<p>utils/createAction.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">import Taro from &quot;@tarojs/taro&quot;;</span><br><span class="line">import &#123; HOST &#125; from &quot;./config&quot;;</span><br><span class="line">const createActionSucess = (TYPE, data) =&gt; &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    type: TYPE,</span><br><span class="line">    payload: data</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line">const createActionFail = data =&gt; &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    type: &quot;GET_FAIL&quot;,</span><br><span class="line">    payload: data</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line">export default function fetchData(option, TYPE) &#123;</span><br><span class="line">  return async dispatch =&gt; &#123;</span><br><span class="line">    Taro.showLoading(&#123;</span><br><span class="line">      title: &quot;loading...&quot;</span><br><span class="line">    &#125;);</span><br><span class="line">    const response = await Taro.request(&#123;</span><br><span class="line">      url: HOST + option.url,</span><br><span class="line">      method: option.method || &quot;GET&quot;,</span><br><span class="line">      data: option.data || &quot;&quot;</span><br><span class="line">    &#125;);</span><br><span class="line">    const res = response.data;</span><br><span class="line">    if (res.code === 0) &#123;</span><br><span class="line">      Taro.hideLoading();</span><br><span class="line">      dispatch(createActionSucess(TYPE, res.data));</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      Taro.hideLoading();</span><br><span class="line">      dispatch(createActionFail(res.data));</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有了这个工具函数，再来看看 action 的创建<br>actions/classInfo.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">import Taro from &quot;@tarojs/taro&quot;;</span><br><span class="line">import &#123;</span><br><span class="line">  GET_USER_CLASS,</span><br><span class="line">  GET_ALL_CLASS,</span><br><span class="line">  JOIN_CLASS,</span><br><span class="line">  GET_USER_CLASS_PLAN,</span><br><span class="line">  GET_CLASS_CMT,</span><br><span class="line">  GET_CLASS_FAIL,</span><br><span class="line">  GET_CLASS_MSG</span><br><span class="line">&#125; from &quot;../constants/classInfo&quot;;</span><br><span class="line">import fetchData from &quot;../service/createAction&quot;;</span><br><span class="line">import &#123; getLoginInfo &#125; from &quot;../utils/getlocalInfo&quot;;</span><br><span class="line"></span><br><span class="line">//处理错误情况</span><br><span class="line">export const getClassFail = data =&gt; &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    type: GET_CLASS_FAIL,</span><br><span class="line">    payload: data</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">//获取用户已加入班级列表</span><br><span class="line">export const ajaxGetUserClass = data =&gt; &#123;</span><br><span class="line">  const option = &#123;</span><br><span class="line">    url: &quot;/getuserclazzlist&quot;,</span><br><span class="line">    method: &quot;POST&quot;,</span><br><span class="line">    data</span><br><span class="line">  &#125;;</span><br><span class="line">  return fetchData(option, GET_USER_CLASS);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">//获取全部班级列表</span><br><span class="line">export const ajaxGetAllClass = data =&gt; &#123;</span><br><span class="line">  const option = &#123;</span><br><span class="line">    url: &quot;/getclazzlist&quot;,</span><br><span class="line">    method: &quot;GET&quot;,</span><br><span class="line">    data</span><br><span class="line">  &#125;;</span><br><span class="line">  return fetchData(option, GET_ALL_CLASS);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">//加入班级</span><br><span class="line">export const ajaxJoinClass = data =&gt; &#123;</span><br><span class="line">  const option = &#123;</span><br><span class="line">    url: &quot;/joinclazz&quot;,</span><br><span class="line">    method: &quot;POST&quot;,</span><br><span class="line">    data</span><br><span class="line">  &#125;;</span><br><span class="line">  return fetchData(option, JOIN_CLASS);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">//获取用户班级学习计划</span><br><span class="line">export const ajaxGetUserClassPlan = data =&gt; &#123;</span><br><span class="line">  const option = &#123;</span><br><span class="line">    url: &quot;/getuserclazzstudyplan&quot;,</span><br><span class="line">    method: &quot;POST&quot;,</span><br><span class="line">    data</span><br><span class="line">  &#125;;</span><br><span class="line">  return fetchData(option, GET_USER_CLASS_PLAN);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">//获取班级评论</span><br><span class="line">export const ajaxGetClassCmt = data =&gt; &#123;</span><br><span class="line">  const option = &#123;</span><br><span class="line">    url: &quot;/getclazzcomment&quot;,</span><br><span class="line">    method: &quot;POST&quot;,</span><br><span class="line">    data</span><br><span class="line">  &#125;;</span><br><span class="line">  return fetchData(option, GET_CLASS_CMT);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">//查看班级基本信息</span><br><span class="line">export const getClassMsg = data =&gt; &#123;</span><br><span class="line">  const userId = getLoginInfo().userId || &quot;&quot;;</span><br><span class="line">  const option = &#123;</span><br><span class="line">    url: &quot;/getclazzmessage&quot;,</span><br><span class="line">    method: &quot;POST&quot;,</span><br><span class="line">    data: &#123;</span><br><span class="line">      userId,</span><br><span class="line">      clazzId: data.clazzId</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  return fetchData(option, GET_CLASS_MSG);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这里就不贴使用封装之前的代码啦（因为被我删了，懒得再去找了 hhhh），但是我个人经过对比之后发现 action 的创建变得清凉多了。<br>这里虽然封装了 action，但其实在组件绑定 redux 状态树的时候还是比较繁琐的，如果项目比较简单，组件数据源单一，还是可以远离 redux 的～～</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/15/js中的多种继承方法总结/" rel="next" title="js中的多种继承方法总结">
+                <i class="fa fa-chevron-left"></i> js中的多种继承方法总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/18/初探webRTC-1-webRTC介绍与实现网页自拍/" rel="prev" title="初探webRTC(1)--webRTC介绍与实现网页自拍">
+                初探webRTC(1)--webRTC介绍与实现网页自拍 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="taleyoung" />
+            
+              <p class="site-author-name" itemprop="name">taleyoung</p>
+              <p class="site-description motion-element" itemprop="description">已经在这里等你很久了。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/taleyoung" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yourname@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/yourname" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/yourname" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/yourname" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1090117853" target="_blank" title="qq">
+                      
+                        <i class="fa fa-fw fa-qq"></i>qq</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#redux-的三大原则"><span class="nav-number">1.</span> <span class="nav-text">redux 的三大原则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#通过一个-todolist-的例子来思考一下模板语法在何处以及如何才难减少"><span class="nav-number">2.</span> <span class="nav-text">通过一个 todolist 的例子来思考一下模板语法在何处以及如何才难减少</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析例子并思考如何进行封装"><span class="nav-number"></span> <span class="nav-text">分析例子并思考如何进行封装</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">taleyoung</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

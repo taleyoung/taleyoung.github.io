@@ -79,17 +79,20 @@
 
 
 
-<meta name="description" content="中国大学mooc视频地址 程序设计与算法（二）算法基础  直接看一道例题  例题一 数字三角形  （一）采用递归方法 思路：此题是标准的递归思维    首先想想第一步怎么走， 首先确定第一个是D[i][j]，那么下一步是D[i+1][j]或                        D[i+1][j+1]    如此便形成相似的循环，可以用递归解决 那么边界条件是什么呢？当递归到最">
+<meta name="description" content="webRTC 背景知识建立一个简单的 webRTC 应用webSocket 与初识信令服务器首先安装一个支持 webSocket 的库 ws12npm i -g wsnpm i -g wscat  下面来测试一下 ws我们在服务端输入一下代码  123456789var WebSocketServer = require(&amp;quot;ws&amp;quot;).Server,  wss = new Web">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MOOC算法学习笔记 - 动态规划（1）">
-<meta property="og:url" content="http://yoursite.com/2018/03/12/MOOC算法学习笔记 - 动态规划（1）/index.html">
+<meta property="og:title" content="初探webRTC(2)--websocket+信令服务器">
+<meta property="og:url" content="http://yoursite.com/2019/06/23/初探webRTC(2)--websocket+信令服务器/index.html">
 <meta property="og:site_name" content="Taleyoung&#39;s Blog">
-<meta property="og:description" content="中国大学mooc视频地址 程序设计与算法（二）算法基础  直接看一道例题  例题一 数字三角形  （一）采用递归方法 思路：此题是标准的递归思维    首先想想第一步怎么走， 首先确定第一个是D[i][j]，那么下一步是D[i+1][j]或                        D[i+1][j+1]    如此便形成相似的循环，可以用递归解决 那么边界条件是什么呢？当递归到最">
+<meta property="og:description" content="webRTC 背景知识建立一个简单的 webRTC 应用webSocket 与初识信令服务器首先安装一个支持 webSocket 的库 ws12npm i -g wsnpm i -g wscat  下面来测试一下 ws我们在服务端输入一下代码  123456789var WebSocketServer = require(&amp;quot;ws&amp;quot;).Server,  wss = new Web">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-11T18:12:02.000Z">
+<meta property="og:image" content="http://yoursite.com/2019/06/23/初探webRTC(2)--websocket+信令服务器/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/23/初探webRTC(2)--websocket+信令服务器/2.png">
+<meta property="og:updated_time" content="2019-07-06T02:09:25.062Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MOOC算法学习笔记 - 动态规划（1）">
-<meta name="twitter:description" content="中国大学mooc视频地址 程序设计与算法（二）算法基础  直接看一道例题  例题一 数字三角形  （一）采用递归方法 思路：此题是标准的递归思维    首先想想第一步怎么走， 首先确定第一个是D[i][j]，那么下一步是D[i+1][j]或                        D[i+1][j+1]    如此便形成相似的循环，可以用递归解决 那么边界条件是什么呢？当递归到最">
+<meta name="twitter:title" content="初探webRTC(2)--websocket+信令服务器">
+<meta name="twitter:description" content="webRTC 背景知识建立一个简单的 webRTC 应用webSocket 与初识信令服务器首先安装一个支持 webSocket 的库 ws12npm i -g wsnpm i -g wscat  下面来测试一下 ws我们在服务端输入一下代码  123456789var WebSocketServer = require(&amp;quot;ws&amp;quot;).Server,  wss = new Web">
+<meta name="twitter:image" content="http://yoursite.com/2019/06/23/初探webRTC(2)--websocket+信令服务器/1.png">
 
 
 
@@ -119,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/12/MOOC算法学习笔记 - 动态规划（1）/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/06/23/初探webRTC(2)--websocket+信令服务器/"/>
 
 
 
 
 
-  <title>MOOC算法学习笔记 - 动态规划（1） | Taleyoung's Blog</title>
+  <title>初探webRTC(2)--websocket+信令服务器 | Taleyoung's Blog</title>
   
 
 
@@ -262,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/MOOC算法学习笔记 - 动态规划（1）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/初探webRTC(2)--websocket+信令服务器/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="taleyoung">
@@ -279,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MOOC算法学习笔记 - 动态规划（1）</h1>
+          <h1 class="post-title" itemprop="name headline">初探webRTC(2)--websocket+信令服务器</h1>
         
 
         <div class="post-meta">
@@ -291,8 +294,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-12T15:10:27+08:00">
-                2018-03-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T13:51:47+08:00">
+                2019-06-23
               </time>
             
 
@@ -329,138 +332,20 @@
       
 
       
-        <p><em>中国大学mooc视频地址 <a href="https://www.icourse163.org/learn/PKU-1001894005?tid=1002783037#/learn/announce" target="_blank" rel="noopener">程序设计与算法（二）算法基础
-</a></em></p>
-<p>直接看一道例题</p>
+        <h4 id="webRTC-背景知识"><a href="#webRTC-背景知识" class="headerlink" title="webRTC 背景知识"></a>webRTC 背景知识</h4><h4 id="建立一个简单的-webRTC-应用"><a href="#建立一个简单的-webRTC-应用" class="headerlink" title="建立一个简单的 webRTC 应用"></a>建立一个简单的 webRTC 应用</h4><h4 id="webSocket-与初识信令服务器"><a href="#webSocket-与初识信令服务器" class="headerlink" title="webSocket 与初识信令服务器"></a>webSocket 与初识信令服务器</h4><h5 id="首先安装一个支持-webSocket-的库-ws"><a href="#首先安装一个支持-webSocket-的库-ws" class="headerlink" title="首先安装一个支持 webSocket 的库 ws"></a>首先安装一个支持 webSocket 的库 ws</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i -g ws</span><br><span class="line">npm i -g wscat</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>例题一 数字三角形</p>
+<p>下面来测试一下 ws<br>我们在服务端输入一下代码</p>
 </blockquote>
-<h2 id="（一）采用递归方法"><a href="#（一）采用递归方法" class="headerlink" title="（一）采用递归方法"></a>（一）采用递归方法</h2><blockquote>
-<p><strong>思路：此题是标准的递归思维</strong><br>    首先想想第一步怎么走， 首先确定第一个是D[i][j]，那么下一步是D[i+1][j]或                        D[i+1][j+1]<br>    如此便形成相似的循环，可以用递归解决 那么边界条件是什么呢？当递归到最            后一行的时候就可以跳出 即if(i==n)为边界条件。<br>    【将原问题拆为若干子问题，在这里原问题（D[i][j]到最后的最大和）的子问题就是D[i][j]的下一个D[i+1][j]或D[i+1][j+1]到最后的最大和】</p>
-</blockquote>
-<p><strong>·······总结下来就是<br>一个位置到最后的最大和 等于 这个位置的[i+1][j]和[i+1][j+1]中到最后的最大和的较大值 加上这个位置本身</strong></p>
-<p>（递归代码如下：</p>
-<pre><code>#include&lt;iostream&gt;
-#include&lt;algorithm&gt;
-#define MAX 101
-using namespace std;
-int D[MAX][MAX];
-int n;
-int MaxSum(int i, int j){
-    if(i==n)
-        return D[i][j]
-    else{
-        int x = MaxSum(i+1,j);
-        int y = MaxSum(i+1,j+1);
-        return max(x,y)+D[i][j];
-}
-int main()
-{
-    int i,j;
-    cin &gt;&gt; n;
-    for(i = 1; i &lt;= n; i++)
-        for(j = 1; j &lt;= i; j++)
-            cin &gt;&gt; D[i][j];
-    cout &lt;&lt; MaxSum(1,1) &lt;&lt;endl;
-    return 0;
-}
-</code></pre><h2 id="（二）采用记忆递归型动归"><a href="#（二）采用记忆递归型动归" class="headerlink" title="（二）采用记忆递归型动归"></a>（二）采用记忆递归型动归</h2><pre><code>解决这种重复计算的方法即记下之前算过的从而避免重复：
-数字三角形的记忆递归型动归程序：
-
-动归代码如下：
-
-#include&lt;iostream&gt;
-#include&lt;algorithm&gt;
-#define MAX 101
-using namespace std;
-int D[MAX][MAX];
-int maxSum[MAX][MAX];        //存放算过的值
-int n;
-int MaxSum(int i, int j){
-    if(maxSum[i][j] != -1)        //判断是否算过了
-        return maxSum[i][j];
-    if(i==n)
-        maxSum[i][j] = D[i][j];
-    else{
-        int x = MaxSum(i+1,j);
-        int y = MaxSum(i+1,j+1);
-        maxSum[i][j] = max(x,y) + D[i][j];
-    }
-    return maxSum[i][j];        //整体return了 这点仔细想想
-int main()
-{
-    int i,j;
-    cin &gt;&gt; n;
-    for(i = 1; i &lt;= n; i++)
-        for(j = 1; j &lt;= i; j++){
-            cin &gt;&gt; D[i][j];
-            maxSum[i][j] = -1;
-        }
-    cout &lt;&lt; MaxSum(1,1) &lt;&lt;endl;
-    return 0;
-}
-</code></pre><h2 id="（三）将递归进阶成递推"><a href="#（三）将递归进阶成递推" class="headerlink" title="（三）将递归进阶成递推"></a>（三）将递归进阶成递推</h2><p>重新分析，可以从最后一行开始，一行行往上递推 </p>
-<pre><code>#include&lt;iostream&gt;
-#define MAX 101
-using namespace std;
-int main()
-{
-    int D[MAX][MAX];
-    int maxSum[MAX][MAX];
-    int n,i,j;
-    cin &gt;&gt; n;
-    for(i = 1; i &lt;= n; i++)
-        for(j = 1;j &lt;=i; j++)
-            cin &gt;&gt; D[i][j];
-    for(i = 1; i &lt;=n; i++)            //对边界条件进行初始化
-        maxSum[n][i] = D[n][i];        //最后一行的结果就是它本身
-    for(i = n-1; i&gt;=1; i--)        //从倒是第二行开始往上递推，
-        for(j = 1; j &lt;=i; j++)
-            maxSum[i][j] = max(maxSum[i+1][j],maxSum[i+1][j+1])+D[i][j];
-    cout &lt;&lt; maxSum[1][1] &lt;&lt;endl;
-    return 0;
-}
-</code></pre><h2 id="（四）递推的空间优化-—滚动数组（存疑）"><a href="#（四）递推的空间优化-—滚动数组（存疑）" class="headerlink" title="（四）递推的空间优化 —滚动数组（存疑）"></a>（四）递推的空间优化 —滚动数组（存疑）</h2><p>在三的递推中，发现其实并不需要一个maxSum[i][j]来记录结果，可以用一个maxSum[i]一维数组来记录，新纪录的可以将旧的结果覆盖，因为不要再用它了，然后再想想 发现其实可以用一个*maxSum 也可以实现</p>
-<pre><code>#include&lt;iostream&gt;
-#define MAX 101
-using namespace std;
-int main()
-{
-    int D[MAX][MAX];
-    int *maxSum;
-    int n,i,j;
-    cin &gt;&gt; n;
-    for(i = 1; i &lt;= n; i++)
-        for(j = 1;j &lt;=i; j++)
-            cin &gt;&gt; D[i][j];
-    maxSum = D[n];
-    for(i = n-1; i&gt;=1; i--)
-        for(j = 1; j &lt;=i; j++)
-            maxSum[j] = max(maxSum[j],maxSum[j+1])+D[i][j];
-    cout &lt;&lt; maxSum[1] &lt;&lt;endl;
-    return 0;
-}
-</code></pre><h2 id="（五）总结：从递归到递推-动规"><a href="#（五）总结：从递归到递推-动规" class="headerlink" title="（五）总结：从递归到递推/动规"></a>（五）总结：从递归到递推/动规</h2><blockquote>
-<ul>
-<li>**··递归到递推的一般转化方法：<pre><code>1.递归函数有n个参数，就定义一个n维的数组 
-2.数组的下标是递归函数参数的取值范围    
-3.数组元素的值是递归函数的返回值    
-4.从边界值出发，逐步填充数组，相当于计算递归函数值的逆过程**
-</code></pre></li>
-</ul>
-<ul>
-<li>**··动规解题的一般思路：<pre><code>1.将原问题拆分成若干小问题（类似于递归的思路），但与递归不同的是要将每次计算的结果存下来，避免重复计算。 【可参照上面数字三角形的例子】
-2.确定状态
-一个状态就是一个子问题，上述例子有多少数字就有多少状态
-3.确定一些初始状态（边界状态）的值
-4.确定状态转移方程
-    如何从一个或多个已知值的状态 求出另一个状态的值
-    可以用递推式表示，即状态转移方程。
-    如数字三角形中的状态转移方程**
-</code></pre></li>
-</ul>
-</blockquote>
-<p><strong>··能用动规解决的问题的特点：<br>    1.问题具有最优子结构性质。<br>指问题的最优解所包含的子问题的解也是最优的<br>     2.无后效性<br>当前的若干个状态值一旦确定，则此后过程的演变就只和这若干个状态值有关，和之前是采取哪种手段或哪条路径演变到当前的这若干个状态没关</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var WebSocketServer = require(&quot;ws&quot;).Server,</span><br><span class="line">  wss = new WebSocketServer(&#123; port: 8888 &#125;);</span><br><span class="line">wss.on(&quot;connection&quot;, function(connection) &#123;</span><br><span class="line">  console.log(&quot;user connected&quot;);</span><br><span class="line">  connection.on(&quot;message&quot;, function(message) &#123;</span><br><span class="line">    console.log(&quot;get message&quot;, message);</span><br><span class="line">  &#125;);</span><br><span class="line">  connection.send(&quot;hello world&quot;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>完成之后使用 node test.js 运行这个服务<br>同时在一个新的终端下面运行 wscat -c ws://localhost:8888<br>成功之后服务端会输出 user connected<br>客户端会输出服务端 send 的 hello world</p>
+<h5 id="发起通话"><a href="#发起通话" class="headerlink" title="发起通话"></a>发起通话</h5><p>这里需要理解发起通话时通过什么来完成的，这里我们将其写到获取 data 的 type 中去识别，在 users 中查找被呼叫者的 id，然后建立 connection,发送期内容，这里的服务端其实相当于一个中转。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">case &quot;offer&quot;:</span><br><span class="line">        console.log(&quot;sending offer to&quot;, data.name);</span><br><span class="line">        var conn = users[data.name];</span><br><span class="line">        if (conn != null) &#123;</span><br><span class="line">          connection.otherName = data.name;</span><br><span class="line">          sendTo(conn, &#123;</span><br><span class="line">            type: &quot;offer&quot;,</span><br><span class="line">            offer: data.offer,</span><br><span class="line">            name: connection.name</span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        break;</span><br></pre></td></tr></table></figure>
+<h5 id="呼叫应答"><a href="#呼叫应答" class="headerlink" title="呼叫应答"></a>呼叫应答</h5><p>有了上一节的简单理解，被呼叫者的表现即为收到服务端的消息，我们在’offer’的 case 之后再增加’answer’，如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">case &quot;answer&quot;:</span><br><span class="line">       console.log(&quot;sending answer to &quot;, data.name);</span><br><span class="line">       var conn = users[data.name];</span><br><span class="line">       if (conn != null) &#123;</span><br><span class="line">         connection.otherName = data.name;</span><br><span class="line">         senTo(conn, &#123;</span><br><span class="line">           type: &quot;answer&quot;,</span><br><span class="line">           answer: data.answer</span><br><span class="line">         &#125;);</span><br><span class="line">       &#125;</span><br><span class="line">       break;</span><br></pre></td></tr></table></figure>
+<p>代码几乎一致，因为说到底，他们都只是会话的不同形式。</p>
+<h5 id="处理-ICE-候选路径"><a href="#处理-ICE-候选路径" class="headerlink" title="处理 ICE 候选路径"></a>处理 ICE 候选路径</h5><h5 id="呼叫挂断"><a href="#呼叫挂断" class="headerlink" title="呼叫挂断"></a>呼叫挂断</h5><p>这个步骤不涉及 webRTC 的规范的，在进行挂断之后，便可以让我们的用户从一方断开，呼叫其他用户。</p>
+<p>在完成项目的步骤之后，我们进行测试，在不同的客户端通过 es 进行通信，效果如下<br><img src="1.png" alt="客户端通信与响应"></p>
+<p>服务端的响应如下<br><img src="2.png" alt="服务端响应"></p>
 
       
     </div>
@@ -485,8 +370,8 @@ int main()
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/12/MOOC算法学习笔记 - 分治/" rel="next" title="MOOC算法学习笔记 - 分治">
-                <i class="fa fa-chevron-left"></i> MOOC算法学习笔记 - 分治
+              <a href="/2019/06/18/初探webRTC-1-webRTC介绍与实现网页自拍/" rel="next" title="初探webRTC(1)--webRTC介绍与实现网页自拍">
+                <i class="fa fa-chevron-left"></i> 初探webRTC(1)--webRTC介绍与实现网页自拍
               </a>
             
           </div>
@@ -494,10 +379,6 @@ int main()
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/02/MOOC算法学习笔记 - 动态规划（3）/" rel="prev" title="MOOC算法学习笔记 - 动态规划（3）">
-                MOOC算法学习笔记 - 动态规划（3） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -655,7 +536,7 @@ int main()
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#（一）采用递归方法"><span class="nav-number">1.</span> <span class="nav-text">（一）采用递归方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（二）采用记忆递归型动归"><span class="nav-number">2.</span> <span class="nav-text">（二）采用记忆递归型动归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（三）将递归进阶成递推"><span class="nav-number">3.</span> <span class="nav-text">（三）将递归进阶成递推</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（四）递推的空间优化-—滚动数组（存疑）"><span class="nav-number">4.</span> <span class="nav-text">（四）递推的空间优化 —滚动数组（存疑）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（五）总结：从递归到递推-动规"><span class="nav-number">5.</span> <span class="nav-text">（五）总结：从递归到递推/动规</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#webRTC-背景知识"><span class="nav-number">1.</span> <span class="nav-text">webRTC 背景知识</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#建立一个简单的-webRTC-应用"><span class="nav-number">2.</span> <span class="nav-text">建立一个简单的 webRTC 应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#webSocket-与初识信令服务器"><span class="nav-number">3.</span> <span class="nav-text">webSocket 与初识信令服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#首先安装一个支持-webSocket-的库-ws"><span class="nav-number">3.1.</span> <span class="nav-text">首先安装一个支持 webSocket 的库 ws</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#发起通话"><span class="nav-number">3.2.</span> <span class="nav-text">发起通话</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#呼叫应答"><span class="nav-number">3.3.</span> <span class="nav-text">呼叫应答</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#处理-ICE-候选路径"><span class="nav-number">3.4.</span> <span class="nav-text">处理 ICE 候选路径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#呼叫挂断"><span class="nav-number">3.5.</span> <span class="nav-text">呼叫挂断</span></a></li></ol></li></ol></div>
             
 
           </div>

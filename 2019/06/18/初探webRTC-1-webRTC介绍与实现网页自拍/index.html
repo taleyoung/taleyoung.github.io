@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="webRTC 背景知识webRTC 是什么webRTC 的目的是实现实时通信大众化。其无需借助第三方软件或插件便可在开放网络中传输高质量音视频流，我们可以通过 webRTC 在浏览器内部的 api 中内建一些构建实时通信应用的库或框架，webRTC 在浏览器 API 中集成了大量技术，解决了很多繁重的问题，例如：捕捉摄像头和麦克风，音视频编解码，传输层以及会话管理。 webRTC 在浏览器中实现的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初探webRTC(1)--webRTC介绍与实现网页自拍">
+<meta property="og:url" content="http://yoursite.com/2019/06/18/初探webRTC-1-webRTC介绍与实现网页自拍/index.html">
+<meta property="og:site_name" content="Taleyoung&#39;s Blog">
+<meta property="og:description" content="webRTC 背景知识webRTC 是什么webRTC 的目的是实现实时通信大众化。其无需借助第三方软件或插件便可在开放网络中传输高质量音视频流，我们可以通过 webRTC 在浏览器内部的 api 中内建一些构建实时通信应用的库或框架，webRTC 在浏览器 API 中集成了大量技术，解决了很多繁重的问题，例如：捕捉摄像头和麦克风，音视频编解码，传输层以及会话管理。 webRTC 在浏览器中实现的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-05T08:21:41.856Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初探webRTC(1)--webRTC介绍与实现网页自拍">
+<meta name="twitter:description" content="webRTC 背景知识webRTC 是什么webRTC 的目的是实现实时通信大众化。其无需借助第三方软件或插件便可在开放网络中传输高质量音视频流，我们可以通过 webRTC 在浏览器内部的 api 中内建一些构建实时通信应用的库或框架，webRTC 在浏览器 API 中集成了大量技术，解决了很多繁重的问题，例如：捕捉摄像头和麦克风，音视频编解码，传输层以及会话管理。 webRTC 在浏览器中实现的">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/18/初探webRTC-1-webRTC介绍与实现网页自拍/"/>
+
+
+
+
+
+  <title>初探webRTC(1)--webRTC介绍与实现网页自拍 | Taleyoung's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Taleyoung's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/18/初探webRTC-1-webRTC介绍与实现网页自拍/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="taleyoung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Taleyoung's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">初探webRTC(1)--webRTC介绍与实现网页自拍</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-18T16:19:58+08:00">
+                2019-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="webRTC-背景知识"><a href="#webRTC-背景知识" class="headerlink" title="webRTC 背景知识"></a>webRTC 背景知识</h3><h4 id="webRTC-是什么"><a href="#webRTC-是什么" class="headerlink" title="webRTC 是什么"></a>webRTC 是什么</h4><p>webRTC 的目的是实现实时通信大众化。其无需借助第三方软件或插件便可在开放网络中传输高质量音视频流，我们可以通过 webRTC 在浏览器内部的 api 中内建一些构建实时通信应用的库或框架，webRTC 在浏览器 API 中集成了大量技术，解决了很多繁重的问题，例如：捕捉摄像头和麦克风，音视频编解码，传输层以及会话管理。</p>
+<h4 id="webRTC-在浏览器中实现的-api"><a href="#webRTC-在浏览器中实现的-api" class="headerlink" title="webRTC 在浏览器中实现的 api"></a>webRTC 在浏览器中实现的 api</h4><ul>
+<li>getUserMedia<br><strong>从客户摄像头或麦克风获取数据流。</strong><br>在 Chrome、Opera、FireFox 和 Edge 中已经实现，我们可以使用 getUserMedia 作为音频的输入。</li>
+</ul>
+<ul>
+<li><p>RTCPeerConnection<br><strong>初始化一个连接，连接他人以及传送流媒体信息</strong><br>在 Chrome、Opera 和 FireFox 中实现。关于名字的解释：经过几次迭代，RTCPeerConnection 被 Chrome 和 Opera 实现为 webkitRTCPeerConnection，被 FireFox 实现为 mozRTCPeerConnection。其他的名字都是过时的，当标准稳定时，前缀会被删除。</p>
+</li>
+<li><p>RTCDataChannel<br><strong>P2P 数据传输管道。</strong></p>
+</li>
+</ul>
+<h4 id="webRTC-需要做的事情"><a href="#webRTC-需要做的事情" class="headerlink" title="webRTC 需要做的事情"></a>webRTC 需要做的事情</h4><ul>
+<li>获取音视频流或其他数据流。</li>
+<li>获取网络信息例如 IP 地址和端口号，与其他客户端交换这些信息来进行连接，包括穿透防火墙。</li>
+<li>向 signaling 报告错误或启动会话关闭连接等。</li>
+<li>对于分辨率解码器等与其他客户端交换信息。</li>
+<li>传输音视频或其他数据信息。</li>
+</ul>
+<h3 id="建立一个简单的-webRTC-应用"><a href="#建立一个简单的-webRTC-应用" class="headerlink" title="建立一个简单的 webRTC 应用"></a>建立一个简单的 webRTC 应用</h3><h4 id="使用-UDP-传输协议"><a href="#使用-UDP-传输协议" class="headerlink" title="使用 UDP 传输协议"></a>使用 UDP 传输协议</h4><h4 id="SDP：会话描述协议"><a href="#SDP：会话描述协议" class="headerlink" title="SDP：会话描述协议"></a>SDP：会话描述协议</h4><h4 id="寻找一条清晰线路的方法"><a href="#寻找一条清晰线路的方法" class="headerlink" title="寻找一条清晰线路的方法"></a>寻找一条清晰线路的方法</h4><ul>
+<li>NAT 会话穿透工具（STUN）<br>STUN 是双方建立稳定连接的第一步，首先发一个请求给服务器，开启 STUN 协议，之后服务器识别发出请求的客户端的 ip，将其返回给客户端。<br>使用 STUN 协议需要一个支持 STUN 协议的服务器，目前，在 Firefox 和 Chrome 中，浏览器直接提供了支持此协议的默认服务器。</li>
+<li>使用中继技术穿透 NAT（TURN）<br>主要解决受防火墙限制的问题。<br>其工作原理是代表客户端在对等连接的双方之间增加一个转播，要求 TURN 服务器去下载，处理并重定向每个用户发来的数据包，建立高质量的服务代价很高。<br>一般情况下，不使用 TURN 是没有问题的</li>
+<li>交互式连接建立（ICE）<br>ice 将 STUN 和 TURN 结合在一起。<br>每一个 ICE 候选路径都是通过 STUN 和 TURN 来找到的。通过查询 stun 服务器来找到外部 ip 地址，并附上 stun 服务器的地址，当连接失败时可用做备份。当浏览器找到一个新的候选路径时，通知客户端程序将使用信令信道来发送 ice 候选路径，当足够多的地址被发现且通过验证，并连接建立之后，这个过程也就结束了。</li>
+</ul>
+<h4 id="建立的工作流程"><a href="#建立的工作流程" class="headerlink" title="建立的工作流程"></a>建立的工作流程</h4><ol>
+<li>判断浏览器是否支持，不支持即报错</li>
+<li>获取用户的媒体流</li>
+<li>创建对等连接对象</li>
+<li>添加 ICE 处理器</li>
+<li>开始 offer 和丹辉</li>
+<li>创建连接</li>
+</ol>
+<h4 id="下面来介绍一个网页自拍"><a href="#下面来介绍一个网页自拍" class="headerlink" title="下面来介绍一个网页自拍"></a>下面来介绍一个网页自拍</h4><p>该说的都写在注释里面啦～～～<br>注释很详细喔</p>
+<p>index.html 如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot; /&gt;</span><br><span class="line">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;</span><br><span class="line">    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot; /&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">      body &#123;</span><br><span class="line">        background-color: #5cc9f5;</span><br><span class="line">        margin-top: 15px;</span><br><span class="line">      &#125;</span><br><span class="line">      video &#123;</span><br><span class="line">        background-color: black;</span><br><span class="line">        border: 1px solid gray;</span><br><span class="line">      &#125;</span><br><span class="line">      #containers &#123;</span><br><span class="line">        position: relative;</span><br><span class="line">        display: block;</span><br><span class="line">        width: 500px;</span><br><span class="line">        height: 500px;</span><br><span class="line">        margin: 0 auto;</span><br><span class="line">      &#125;</span><br><span class="line">      #yours &#123;</span><br><span class="line">        width: 150px;</span><br><span class="line">        height: 150px;</span><br><span class="line">        position: absolute;</span><br><span class="line">        top: 15px;</span><br><span class="line">        right: 15px;</span><br><span class="line">      &#125;</span><br><span class="line">      #theirs &#123;</span><br><span class="line">        width: 500px;</span><br><span class="line">        height: 500px;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;div class=&quot;container&quot;&gt;</span><br><span class="line">      &lt;video id=&quot;yours&quot; autoplay&gt;&lt;/video&gt;</span><br><span class="line">      &lt;video id=&quot;theirs&quot; autoplay&gt;&lt;/video&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;script src=&quot;./main.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>main.js 如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">//为了兼容不同浏览器，因为每个浏览器的hasGetUserMedia不同</span><br><span class="line">function hasGetUserMedia() &#123;</span><br><span class="line">  navigator.getUserMedia =</span><br><span class="line">    navigator.getUserMedia ||</span><br><span class="line">    navigator.webkitGetUserMedia ||</span><br><span class="line">    navigator.mozGetUserMedia ||</span><br><span class="line">    navigator.msGetUserMedia;</span><br><span class="line">  return !!navigator.getUserMedia;</span><br><span class="line">&#125;</span><br><span class="line">function hasRTCPeerConnection() &#123;</span><br><span class="line">  window.RTCPeerConnection =</span><br><span class="line">    window.RTCPeerConnection ||</span><br><span class="line">    window.webkitRTCPeerConnection ||</span><br><span class="line">    window.mozRTCPeerConnection;</span><br><span class="line">  return !!window.RTCPeerConnection;</span><br><span class="line">&#125;</span><br><span class="line">//选中对应的html标签</span><br><span class="line">var yourVideo = document.querySelector(&quot;#yours&quot;),</span><br><span class="line">  theirVideo = document.querySelector(&quot;#theirs&quot;),</span><br><span class="line">  yourConnection,</span><br><span class="line">  theirConnection;</span><br><span class="line">if (hasGetUserMedia()) &#123;</span><br><span class="line">  /**</span><br><span class="line">   * 这里用到了很重要的一个api getUserMedia</span><br><span class="line">   * 第一个参数是一个对象，即约束对象，一些配置等，参见代码</span><br><span class="line">   * 第二个参数是成功回调，参数为流stream</span><br><span class="line">   * 第三个参数是失败回调</span><br><span class="line">   */</span><br><span class="line">  navigator.getUserMedia(</span><br><span class="line">    &#123;</span><br><span class="line">      video: true,</span><br><span class="line">      audio: false</span><br><span class="line">    &#125;,</span><br><span class="line">    function(stream) &#123;</span><br><span class="line">      //注释掉的表示该api已经被chrome抛弃了，用下面那行的就可以了</span><br><span class="line">      //   yourVideo.src = window.URL.createObjectURL(stream);</span><br><span class="line">      yourVideo.srcObject = stream;</span><br><span class="line">      yourVideo.play();</span><br><span class="line">      if (hasRTCPeerConnection()) &#123;</span><br><span class="line">        //维护会话和对等连接的状态</span><br><span class="line">        startPeerConnection(stream);</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        alert(&quot;Sorry,your brower dont support WebRTC&quot;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    function(error) &#123;</span><br><span class="line">      console.log(&quot;error&quot;, error);</span><br><span class="line">    &#125;</span><br><span class="line">  );</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  alert(&quot;Sorry,your brower dont support WebRTC&quot;);</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> * 这个函数的作用</span><br><span class="line"> * 创建RTCPeerConnection对象</span><br><span class="line"> * 建立SDP offer 并返回</span><br><span class="line"> * 为双方寻找ICE候选路径</span><br><span class="line"> */</span><br><span class="line">function startPeerConnection(stream) &#123;</span><br><span class="line">  var configuration = &#123;</span><br><span class="line">    //使用默认的配置</span><br><span class="line">    // &quot;iceServers&quot;:[&#123;&quot;url&quot;:&quot;stun:127.0.0.1:9876&quot;&#125;]</span><br><span class="line">  &#125;;</span><br><span class="line">  //建立两个RTCPeerConnection对象</span><br><span class="line">  yourConnection = new webkitRTCPeerConnection(configuration);</span><br><span class="line">  theirConnection = new webkitRTCPeerConnection(configuration);</span><br><span class="line">  //创建ICE处理，寻找候选路径</span><br><span class="line">  yourConnection.onicecandidate = function(e) &#123;</span><br><span class="line">    if (e.candidate) &#123;</span><br><span class="line">      theirConnection.addIceCandidata(new RTCIceCandidate(e.candidate));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  theirConnection.onicecandidate = function(e) &#123;</span><br><span class="line">    if (e.candidate) &#123;</span><br><span class="line">      yourConnection.addIceCandidate(new RTCIceCandidate(e.candidate));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  //开始offer</span><br><span class="line">  yourConnection.createOffer(function(offer) &#123;</span><br><span class="line">    yourConnection.setLocalDescription(offer);</span><br><span class="line">    theirConnection.setRemoteDescription(offer);</span><br><span class="line">    //创建应答</span><br><span class="line">    theirConnection.createAnswer(function(offer) &#123;</span><br><span class="line">      theirConnection.setLocalDescription(offer);</span><br><span class="line">      yourConnection.setRemoteDescription(offer);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/03/记一次taro项目中对redux模板代码的封装/" rel="next" title="记一次taro项目中对redux模板代码的封装">
+                <i class="fa fa-chevron-left"></i> 记一次taro项目中对redux模板代码的封装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/23/初探webRTC(2)--websocket+信令服务器/" rel="prev" title="初探webRTC(2)--websocket+信令服务器">
+                初探webRTC(2)--websocket+信令服务器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="taleyoung" />
+            
+              <p class="site-author-name" itemprop="name">taleyoung</p>
+              <p class="site-description motion-element" itemprop="description">已经在这里等你很久了。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/taleyoung" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yourname@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/yourname" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/yourname" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/yourname" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1090117853" target="_blank" title="qq">
+                      
+                        <i class="fa fa-fw fa-qq"></i>qq</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#webRTC-背景知识"><span class="nav-number">1.</span> <span class="nav-text">webRTC 背景知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#webRTC-是什么"><span class="nav-number">1.1.</span> <span class="nav-text">webRTC 是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#webRTC-在浏览器中实现的-api"><span class="nav-number">1.2.</span> <span class="nav-text">webRTC 在浏览器中实现的 api</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#webRTC-需要做的事情"><span class="nav-number">1.3.</span> <span class="nav-text">webRTC 需要做的事情</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立一个简单的-webRTC-应用"><span class="nav-number">2.</span> <span class="nav-text">建立一个简单的 webRTC 应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-UDP-传输协议"><span class="nav-number">2.1.</span> <span class="nav-text">使用 UDP 传输协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SDP：会话描述协议"><span class="nav-number">2.2.</span> <span class="nav-text">SDP：会话描述协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#寻找一条清晰线路的方法"><span class="nav-number">2.3.</span> <span class="nav-text">寻找一条清晰线路的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#建立的工作流程"><span class="nav-number">2.4.</span> <span class="nav-text">建立的工作流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下面来介绍一个网页自拍"><span class="nav-number">2.5.</span> <span class="nav-text">下面来介绍一个网页自拍</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">taleyoung</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
